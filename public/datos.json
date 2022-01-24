@@ -1,0 +1,32 @@
+[
+    {
+        "categoria": "Arte y literatura",
+        "pregunta": "¿Quien pinto la mona lisa?",
+        "opcion1": "Leonardo da Vinci",
+        "opcion2": "Picasso",
+        "opcion3": "Miguel Angel",
+        "opcion4": "Monet",
+        "imagen": "https://i.ibb.co/9cjvmw1/mona-lisa.jpg",
+        "objectFit": "cover"
+    },
+    {
+        "categoria": "Arte y literatura",
+        "pregunta": "Pintor de  El jardin de las delicias",
+        "opcion1": "El Bosco",
+        "opcion2": "Velasquez",
+        "opcion3": "Picasso",
+        "opcion4": "Dalí\r",
+        "imagen": "https://i.ibb.co/SDjX7PM/jardin-de-las-delicias.jpg",
+        "objectFit": "cover"
+    },
+    {
+        "categoria": "Arte y literatura",
+        "pregunta": "significado de  'El jardin de las delicias'",
+        "opcion1": "Mundo Terrenal",
+        "opcion2": "Es Mejor Morir",
+        "opcion3": "Dios Es El Camino",
+        "opcion4": "Adan Y Eva\r",
+        "imagen": "https://i.ibb.co/SDjX7PM/jardin-de-las-delicias.jpg",
+        "objectFit": "cover"
+    }
+]
