@@ -1,9 +1,3 @@
- .card {
-   text-align: center;
-   align-items: center;
-   align-content: center;
- }
-
  .quiz-answer {
    background-color: #fff;
    padding: 5px;
@@ -16,12 +10,6 @@
  .quiz-answer:hover {
    background-color: #f1f1f1;
    cursor: pointer;
- }
-
- .card1 {
-   bottom: 0;
-   right: 0;
-   position: fixed !important;
  }
 
  .btn-quiz {
@@ -45,11 +33,6 @@
    justify-content: center;
  }
 
-
- * {
-   transition: all 0.3s;
- }
-
  .imagen {
    object-fit: cover;
    height: 0px;
@@ -70,7 +53,6 @@
    word-wrap: break-word;
    background-color: #fff;
    background-clip: border-box;
-   border: 1px solid rgba(0, 0, 0, .125);
    border-radius: 0.25rem;
    width: 500px;
  }
@@ -82,6 +64,8 @@
    align-items: center;
    text-align: center;
    color: #fff;
+   background-position: center;
+   background-repeat: no-repeat;
  }
 
  .contenido .respuestas {
@@ -91,3 +75,10 @@
  .active {
    background-color: rgb(16, 214, 148);
  }
+
+ .float{
+	position:fixed;
+	bottom:40px;
+	right:40px;
+	text-align:center;
+}

@@ -38,120 +38,80 @@
     }
 </script>
 
-<div class="content">
-    <div class="card-container">
-        <div class="card2">
-            {#if flipped}
-                <div class="side" transition:flip>
-                    <div class="info" style="background-color:url({fondo})">
-                        <img src={fondo} alt="" />
-                        <div>
-                            <h3>
-                                Get EX.CO's Digital Interactions Platform for
-                                FREE! Apply for EX.CO's Spotlight SMB Program
-                                Below...
-                            </h3>
-                            <button>Ver mas</button>
-                        </div>
-                    </div>
+<center>
+    <div class="card-widget">
+        {#if flipped}
+            <div
+                class="back"
+                transition:flip
+                style="background-image: url({fondo})"
+            >
+                <div class="align-middle">
+                    <h3>
+                        Get EX.CO's Digital Interactions Platform for FREE!
+                        Apply for EX.CO's Spotlight SMB Program Below...
+                    </h3>
+                    <button
+                        class="btn btn-primary animate__animated  animate__pulse animate__infinite"
+                        >Ver mas</button
+                    >
                 </div>
-            {:else}
-                <div class="side back">
-                    <div class="content-question">
-                        <div class="title">
-                            <h3>What Kind of E-Commerce Store Do You Have?</h3>
-                        </div>
-                        <div>
-                            {#each datos as item}
-                                <button
-                                    class="single-answer"
-                                    type="button"
-                                    on:click={() => clic(item.img)}
-                                >
-                                    <div class="pb-grid-quiz-answer">
-                                        <img alt="Fashion" src={item.img} />
-                                        <p
-                                            font="poppins"
-                                            class="ql-font-poppins"
-                                        >
-                                            {item.opcion}
-                                        </p>
-                                    </div>
-                                </button>
-                            {/each}
-                        </div>
+            </div>
+        {:else}
+            <div class="front">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="m-5">
+                            What Kind of E-Commerce Store Do You Have?
+                        </h3>
                     </div>
+                    {#each datos as item}
+                        <div class="col-md-4 col-sm-6 col-6">
+                            <button
+                                class="btn"
+                                type="button"
+                                on:click={() => clic(item.img)}
+                            >
+                                <div class="img-card">
+                                    <img
+                                        alt="Fashion"
+                                        class="img-thumbnail rounded-circle"
+                                        src={item.img}
+                                    />
+                                    <h5 class="card-title">
+                                        {item.opcion}
+                                    </h5>
+                                </div>
+                            </button>
+                        </div>
+                    {/each}
                 </div>
-            {/if}
-        </div>
+            </div>{/if}
     </div>
-</div>
+</center>
 
 <style>
-    .content-question {
+    .card-widget {
+        max-width: 600px !important;
+    }
+    .front {
         background-color: rgb(245, 215, 245);
-        justify-content: center;
-        padding: 10px;
-        text-align: center;
-        height: 100%;
-        width: 100%;
-        height: 100%;
-    }
-    .content-question .title {
-        margin: 20px;
-    }
-    .single-answer {
-        border: none;
-        background: transparent;
-    }
-    .single-answer img {
-        border-radius: 100%;
-        width: 100px;
-        height: 100px;
-    }
-    .single-answer:hover img {
-        width: 110px;
-        height: 110px;
-    }
-    .card-container {
-        position: relative;
-        height: 400px;
-        width: 600px;
     }
 
-    .card2 {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        perspective: 600;
-    }
-
-    .side {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        background-color: rgb(95, 94, 92);
-        overflow: hidden;
-        color: #fff;
-        justify-content: center;
-        align-items: center;
+    .back,
+    .front {
         display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
         text-align: center;
     }
 
     .back {
-        background-color: grey;
+        height: 400px;
+        width: 600px;
     }
-
-    .info {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-    }
-
-    .info div {
-        position: absolute;
+    .btn:hover .img-thumbnail {
+        max-width: 105%;
     }
 </style>

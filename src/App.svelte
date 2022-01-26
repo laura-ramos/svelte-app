@@ -9,6 +9,8 @@
 	import Popup from "./Popup.svelte";
 	const modal = writable(null);
 	const showModal = () => modal.set(Popup);
+	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+	import '../node_modules/animate.css/animate.css';
 </script>
 
 <Router>
@@ -21,8 +23,6 @@
 	  </nav>
 	</header>
   
-	<main>
-		
 	  <Route path="/">
 		<h3>Preguntas y respuestas</h3>
 		<p>El usuario responde a las preguntas y se verifica si es correcta su respuesta</p>
@@ -48,6 +48,4 @@
 		<h3>Otro ejemplo mas</h3>
 		<Estadistica/>
 	  </Route>
-  
-	</main>
   </Router>
