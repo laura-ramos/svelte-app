@@ -1,15 +1,15 @@
 <script>
     let datos = [
         {
-            opcion: "Fashion",
+            opcion: "Elegancia",
             img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963520/blvevhbjbdgaua5c22vc.jpg",
         },
         {
-            opcion: "Beauty",
+            opcion: "Comodidad",
             img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963488/wd19ares3m1lag5uqtmm.jpg",
         },
         {
-            opcion: "Health and Wellness",
+            opcion: "Naturalidad",
             img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963557/qqrm2qzn61vw4aeo3rtf.jpg",
         },
     ];
@@ -48,8 +48,10 @@
             >
                 <div class="align-middle">
                     <h3>
-                        Get EX.CO's Digital Interactions Platform for FREE!
-                        Apply for EX.CO's Spotlight SMB Program Below...
+                        Si bien te gusta la mod, y algunas tendencias, prefieres no seguir lo que las 
+                        multitudes siguen. Tienes tu propio estilo clásico, pero también original. 
+                        Es todo un reto llevar un estilo propio, original, pero también conservador, 
+                        ¡y tu lo has hecho de manera GENIAL!
                     </h3>
                     <button
                         class="btn btn-primary animate__animated  animate__pulse animate__infinite"
@@ -62,7 +64,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="m-5">
-                            What Kind of E-Commerce Store Do You Have?
+                            ¿Qué Buscas En Las Prendas Que Llevas En Tu Día A Día?
                         </h3>
                     </div>
                     {#each datos as item}

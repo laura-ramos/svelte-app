@@ -1,4 +1,5 @@
 <script>
+    import { fade, blur, slide, scale, fly} from "svelte/transition"
     let datos = [
         {
             pregunta: "Pick the false statement.",
@@ -66,13 +67,10 @@
     function oprimir_btn(tipo) {
         mostrarRespuesta = true;
         siguiente = true;
-        console.log(preguntas_hechas + "-" + (datos.length - 1));
         if (tipo == true) {
             respuesta_correcta++;
         }
         if (preguntas_hechas >= datos.length - 1) {
-            //cacular resultados
-
             setTimeout(() => {
                 item = {
                     pregunta: respuesta_correcta + "/" + datos.length,
@@ -85,41 +83,19 @@
                 mostrarRespuesta = false;
                 preguntas_hechas++;
                 item = datos[preguntas_hechas];
-            }, 2000);
+            }, 3000);
         }
     }
 </script>
 
 <center>
-    <!--<div class="contenido">
-        {preguntas_hechas + 1}/{datos.length}
-        <div class="encabezado" style="background-image: url({item.image});">
-            <div class="titulo animate__animated animate__bounce">
-                <h3>{item.pregunta}</h3>
-            </div>
-        </div>
-        {#if item.opciones}
-            <div class="respuestas border">
-                {#each item.opciones as opcion}
-                    <div
-                        class="quiz-answer animate__animated {mostrarRespuesta &&
-                        opcion.tipo == true
-                            ? 'active animate__pulse'
-                            : ''}"
-                        on:click={oprimir_btn(opcion.tipo)}
-                    >
-                        {opcion.respuesta}
-                    </div>
-                {/each}
-            </div>
-        {/if}
-    </div>-->
     <div class="widget-quiz">
-        <div class="card">
+        <div class="card" in:slide>
             <div class="card-inner">
                 {preguntas_hechas + 1}/{datos.length}
-                <img src={item.image} class="card-img-top" alt="..." />
-
+                {#if terminado == false}
+                    <img src={item.image} class="card-img-top" alt="..." />
+                {/if}
                 <div class="card-body {terminado?'terminado':''}">
                         <h5 class="card-title">{item.pregunta}</h5>
 
@@ -130,7 +106,7 @@
                                 <div
                                     class="quiz-answer animate__animated {mostrarRespuesta &&
                                     opcion.tipo == true
-                                        ? 'active animate__pulse'
+                                        ? 'animate__pulse active'
                                         : ''}"
                                     on:click={oprimir_btn(opcion.tipo)}
                                 >

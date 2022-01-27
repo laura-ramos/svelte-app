@@ -1,5 +1,7 @@
 <script>
     import { onMount } from "svelte";
+    import { fade, blur, slide, scale, fly} from "svelte/transition";
+    import { flip} from "svelte/animate"
     let datos = [
         {
             pregunta: "Para ti 'vacaciones' es sinonimo de...",
@@ -44,16 +46,17 @@
     let quiz = false;
     let terminado = false;
     let total_preguntsas=datos.length;
+    let siguiente_pregunta = false;
+
     function siguiente() {
-        console.log(9)
-        console.log(preguntas_hechas)
+        siguiente_pregunta = true;
         if (preguntas_hechas == total_preguntsas) {
             terminado = true;
             quiz = false;
         } else {
-            //i = preguntas_hechas;
             item = datos[preguntas_hechas];
             preguntas_hechas++;
+            siguiente_pregunta = false;
         }
     }
 
@@ -63,21 +66,21 @@
 </script>
 
 <center>
-    <div class="card-quiz">
+    <div class="card-quiz mb-4">
         {#if quiz == true}
-            <div class="card">
+        <div class="card shadow" in:fade={{duration:400, delay:400}}> 
                 <img
                     src={item.imagen}
                     class="card-img-top img-title"
                     alt="..."
                 />
-                <h5 class="card-title mt-2">
+                <h4 class="card-title mt-3">
                     {item.pregunta}
-                </h5>
+                </h4>
                 <div class="card-body">
                     {#each item.opciones as opcion}
                         <!-- svelte-ignore missing-declaration -->
-                        <buttom class="quiz-answer" on:click={siguiente}>
+                        <buttom class="quiz-answer btn-answer" on:click={siguiente} in:fade>
                             {opcion}
                         </buttom>
                     {/each}
@@ -85,7 +88,7 @@
             </div>
         {/if}
         {#if quiz == false && terminado == false}
-            <div class="card">
+            <div class="card shadow" in:slide>
                 <img
                     src="https://www.lavanguardia.com/files/og_thumbnail/uploads/2018/06/15/5fa43d71a111f.jpeg"
                     class="card-img-top img-title"
@@ -98,16 +101,18 @@
                         on:click={clic}>¡Empezar!</buttom
                     >
                 </div>
-                <h5 class="card-title mt-2">Test: ¿Cual es tu viaje ideal?</h5>
-                <div class="card-body">
-                    Paris, Nueva york, sidney, Dubai ... <br />
-                    !Descubre es tu destino ideal y haz la maleta!
+                <h3 class="card-title mt-2">Test: ¿Cual es tu viaje ideal?</h3>
+                <div class="card-body mb-2">
+                    <spam class="text-muted">
+                        Paris, Nueva york, sidney, Dubai ... <br />
+                        ¡Descubre cual es tu destino ideal y haz la maleta!
+                    </spam>
                 </div>
             </div>
         {/if}
 
         {#if terminado == true}
-            <div class="card">
+            <div class="card shadow" transition:fade={{duration: 500, delay:300}}>
                 <img
                     src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4b/59/86/caption.jpg?w=500&h=300&s=1"
                     class="card-img-top img-title"
@@ -125,7 +130,7 @@
                 </div>
             </div>
         {/if}
-    </div>
+    </div><br><br>
 </center>
 
 <style>
@@ -134,12 +139,11 @@
     }
 
     .img-title {
-        max-height: 200px;
+        max-height: 300px;
         object-fit: cover;
     }
 
     .btn-empezar {
-        width: 100px;
         margin-top: -20px;
     }
 </style>
