@@ -3,6 +3,7 @@
 	 import { Router, Route, Link } from "svelte-routing";
 	import Widget from "./Widget.svelte";
 	import Estadistica from "./Estadistica.svelte";
+	import Test from "./Quiz2.svelte";
 
 	import { writable } from "svelte/store";
 	import Modal from "svelte-simple-modal";
@@ -42,6 +43,7 @@
 				</div>
 			</div>
 		</Modal>
+		<Test></Test>
 	  </Route>
   
 	  <Route path="estadistica">
