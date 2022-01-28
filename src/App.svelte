@@ -4,6 +4,7 @@
 	import Widget from "./Widget.svelte";
 	import Estadistica from "./Estadistica.svelte";
 	import Test from "./Quiz2.svelte";
+	import StarWars from "./StarWars.svelte";
 
 	import { writable } from "svelte/store";
 	import Modal from "svelte-simple-modal";
@@ -21,6 +22,7 @@
 		<Link to="/">Ejemplo 1</Link>
 		<Link to="popup">Ejemplo 2</Link>
 		<Link to="estadistica">Ejemplo 3</Link>
+		<Link to="quiz">Ejemplo 4</Link>
 	  </nav>
 	</header>
   
@@ -49,5 +51,9 @@
 	  <Route path="estadistica">
 		<h3>Otro ejemplo mas</h3>
 		<Estadistica/>
+	  </Route>
+	   <Route path="quiz">
+		<h3>Obtener datos desde una api</h3>
+		<StarWars/>
 	  </Route>
   </Router>

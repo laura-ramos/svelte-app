@@ -2,7 +2,11 @@
     import { onMount } from "svelte";
     import { fade, blur, slide, scale, fly} from "svelte/transition";
     import { flip} from "svelte/animate"
-    let datos = [
+    let datos = {
+        titulo: "Test: ¿Cual es tu viaje ideal?",
+        descripcion : "Paris, Nueva york, sidney, Dubai... ¡Descubre cual es tu destino ideal y haz la maleta!",
+        imagen: "https://www.lavanguardia.com/files/og_thumbnail/uploads/2018/06/15/5fa43d71a111f.jpeg",
+        preguntas: [
         {
             pregunta: "Para ti 'vacaciones' es sinonimo de...",
             opciones: [
@@ -32,20 +36,16 @@
                 "Fiestero",
             ],
             imagen: "https://www.miguelteve.com/wp-content/uploads/2016/10/guggenheimBilbao.jpg",
-        },
-    ];
-    const API = "/datos.json";
-    onMount(async () => {
-        const res = await fetch(API);
-        //datos = await res.json();
-    });
+        }
+        ]
+    };
 
     var pregunta = "";
-    var item = datos[0];
+    var item = datos.preguntas[0];
     var preguntas_hechas = 0;
     let quiz = false;
     let terminado = false;
-    let total_preguntsas=datos.length;
+    let total_preguntsas=datos.preguntas.length;
     let siguiente_pregunta = false;
 
     function siguiente() {
@@ -54,7 +54,7 @@
             terminado = true;
             quiz = false;
         } else {
-            item = datos[preguntas_hechas];
+            item = datos.preguntas[preguntas_hechas];
             preguntas_hechas++;
             siguiente_pregunta = false;
         }
@@ -90,7 +90,7 @@
         {#if quiz == false && terminado == false}
             <div class="card shadow" in:slide>
                 <img
-                    src="https://www.lavanguardia.com/files/og_thumbnail/uploads/2018/06/15/5fa43d71a111f.jpeg"
+                    src="{datos.imagen}"
                     class="card-img-top img-title"
                     alt="..."
                 />
@@ -101,11 +101,10 @@
                         on:click={clic}>¡Empezar!</buttom
                     >
                 </div>
-                <h3 class="card-title mt-2">Test: ¿Cual es tu viaje ideal?</h3>
+                <h3 class="card-title mt-2">{datos.titulo}</h3>
                 <div class="card-body mb-2">
                     <spam class="text-muted">
-                        Paris, Nueva york, sidney, Dubai ... <br />
-                        ¡Descubre cual es tu destino ideal y haz la maleta!
+                        {datos.descripcion}
                     </spam>
                 </div>
             </div>

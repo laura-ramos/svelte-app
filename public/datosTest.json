@@ -1,0 +1,37 @@
+{
+    "titulo": "Test: ¿Cual es tu viaje ideal?",
+    "descripcion": "Paris, Nueva york, sidney, Dubai... ¡Descubre cual es tu destino ideal y haz la maleta!",
+    "imagen": "https://www.lavanguardia.com/files/og_thumbnail/uploads/2018/06/15/5fa43d71a111f.jpeg",
+    "preguntas": [
+        {
+            "pregunta": "Para ti 'vacaciones' es sinonimo de...",
+            "imagen": "https://unamglobal.unam.mx/wp-content/uploads/2018/08/vacaciones.jpg",
+            "opciones": [
+                "Relax y descanso",
+                "Deporte y aventura",
+                "Nuevas culturas y costumbres",
+                "Fiesta, alcohol y amigos"
+            ]
+        },
+        {
+            "pregunta": "¿Con quien te gustaria irte de viaje?",
+            "imagen": "https://www.fiscoclic.mx/blog/wp-content/uploads/2021/08/dias-de-vacaciones-por-anio.jpeg",
+            "opciones": [
+                "Con mis amigos de siempre",
+                "No hay nada como viajar solo",
+                "En pareja",
+                "Con la familia"
+            ]
+        },
+        {
+            "pregunta": "¿Que te define mejor?",
+            "imagen": "https://www.miguelteve.com/wp-content/uploads/2016/10/guggenheimBilbao.jpg",
+            "opciones": [
+                "Romantico emperdenido",
+                "Tradicional y de costumbres",
+                "Atrevido me gusta vivir emociones fuertes",
+                "Fiestero"
+            ]
+        }
+    ]
+}
