@@ -29,19 +29,23 @@
 <center>
     <div class="widget-quiz">
         {#if datos}
-            <div class="card" in:slide={{duration:500, delay:500}}>
-                <div class="card-inner">
-                    <img src="https://i1.wp.com/codigoespagueti.com/wp-content/uploads/2021/05/star-wars-logo.jpg?fit=1280%2C720&quality=80&ssl=1" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title">{item.title}</h5>
-                        {#each item.planets as opcion}
-                            <div class="quiz-answer" on:click={oprimir_btn}>
-                                {opcion}
-                            </div>
-                        {/each}
+        {#each datos as question, questionIndex}
+                {#if preguntas_hechas === questionIndex}
+                <div class="card">
+                    <div class="card-inner" in:blur>
+                        <img src="https://i1.wp.com/codigoespagueti.com/wp-content/uploads/2021/05/star-wars-logo.jpg?fit=1280%2C720&quality=80&ssl=1" class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">{question.title}</h5>
+                            {#each question.planets as opcion}
+                                <div class="quiz-answer" on:click={oprimir_btn}>
+                                    {opcion}
+                                </div>
+                            {/each}
+                        </div>
                     </div>
                 </div>
-            </div>
+                {/if}
+            {/each}
         {:else}
             <div>
                 <div class="spinner-grow text-info" role="status">
@@ -51,25 +55,6 @@
             </div>
         {/if}
     </div>
-
-<!--{#await fetchDatos}
-	<p>...waiting</p>
-{:then data}
-{#each data.results as item}
-	 <div class="widget-quiz">
-        <div class="card" in:slide>
-            <div class="card-inner">
-                <div class="card-body">
-                        <h5 class="card-title">{item.name}</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    {/each}
-{:catch error}
-	<p>An error occurred!</p>
-{/await}-->
-   
 </center>
 
 <style>

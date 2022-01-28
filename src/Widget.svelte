@@ -1,96 +1,82 @@
 <script>
-    import { fade, blur, slide, scale, fly} from "svelte/transition"
-        import { onMount } from "svelte";
+    import { fade, blur, slide, scale, fly } from "svelte/transition";
+    import { onMount } from "svelte";
     let datos;
-    let item;
-
-    onMount(async()=>{
-     const response = await fetch("../preguntasYrespuestas.json")
-      const data = await response.json();
-      datos = data;
-      item = data[0];
-      
+    let total_preguntas = 0;
+    onMount(async () => {
+        const response = await fetch("../preguntasYrespuestas.json");
+        const data = await response.json();
+        datos = data;
+        total_preguntas = datos.length;
     });
-    //let item = datos[0];
     let preguntas_hechas = 0;
-    let correcto = "";
     let mostrarRespuesta = false;
     let respuesta_correcta = 0;
-    let siguiente = false;
-    let terminado = false;
-    function oprimir_btn(tipo) {
-        mostrarRespuesta = true;
-        siguiente = true;
-        if (tipo == true) {
+    function next(res) {
+        if (res == true) {
             respuesta_correcta++;
         }
-        if (preguntas_hechas >= datos.length - 1) {
-            setTimeout(() => {
-                item = {
-                    pregunta: respuesta_correcta + "/" + datos.length,
-                };
-                terminado = true;
-            }, 2000);
-            
-        } else {
-            setTimeout(() => {
-                mostrarRespuesta = false;
-                preguntas_hechas++;
-                item = datos[preguntas_hechas];
-            }, 3000);
+        if (preguntas_hechas < total_preguntas) {
+            preguntas_hechas++;
         }
+    }
+    function repetir() {
+        preguntas_hechas = 0;
+        respuesta_correcta = 0;
     }
 </script>
 
 <center>
     <div class="widget-quiz">
         {#if datos}
-            <div class="card" in:slide>
-                <div class="card-inner">
-                    {preguntas_hechas + 1}/{datos.length}
-                    {#if terminado == false}
-                        <img src={item.imagen} class="card-img-top" alt="imagen" />
-                    {/if}
-                    <div class="card-body {terminado?'terminado':''}">
-                            <h5 class="card-title">{item.pregunta}</h5>
-
-                        {#if item.opciones}
-                            <div class="">
-                                {#each item.opciones as opcion}
-                                    <!-- svelte-ignore missing-declaration -->
+            {#each datos as question, questionIndex}
+                {#if preguntas_hechas === questionIndex}
+                    <div class="card border-0">
+                        <div class="card-inner" in:fade out:slide>
+                            <img
+                                src={question.imagen}
+                                class="card-img-top"
+                                alt="imagen"
+                            />
+                            <div class="card-body">
+                                <h5 class="card-title">{question.pregunta}</h5>
+                                {#each question.opciones as opcion}
                                     <div
                                         class="quiz-answer animate__animated {mostrarRespuesta &&
                                         opcion.tipo == true
                                             ? 'animate__pulse active'
                                             : ''}"
-                                        on:click={oprimir_btn(opcion.tipo)}
+                                        on:click={next(opcion.tipo)}
                                     >
                                         {opcion.respuesta}
                                     </div>
                                 {/each}
                             </div>
-                        {/if}
+                        </div>
                     </div>
+                {/if}
+            {/each}
+            {#if total_preguntas == preguntas_hechas}
+                <div class="card-final align-self-center" in:fade>
+                    <p class="fs-2">{respuesta_correcta}/{total_preguntas}</p>
+                    <spam class="text-muted"> 120 respuestas </spam>
+                    <p>
+                        <buttom class="btn btn-secondary animate__animated  animate__pulse animate__infinite" on:click={repetir}
+                            >Repetir</buttom
+                        >
+                    </p>
                 </div>
-            </div>
-        {:else}
-            <div>
-                <div class="spinner-grow text-info" role="status">
-                    <span class="sr-only"></span>
-                </div>
-                <p>Cargando.....</p>
-            </div>
+            {/if}
         {/if}
     </div>
 </center>
 
 <style>
-    .widget-quiz{
+    .widget-quiz {
         margin: 10px;
         max-width: 600px;
         height: 100%;
         width: 100%;
-
     }
     .card::before,
     .card::after {
@@ -137,7 +123,7 @@
         transform: translate(-20px, -20px);
     }
 
-    .terminado{
+    .card-final {
         height: 200px;
         background-color: #f1f1f1;
     }
