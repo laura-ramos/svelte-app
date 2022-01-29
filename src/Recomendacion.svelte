@@ -13,14 +13,7 @@
             img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963557/qqrm2qzn61vw4aeo3rtf.jpg",
         },
     ];
-    let item = datos[0];
-    let preguntas_hechas = 0;
-    let correcto = "";
-    let mostrarRespuesta = false;
-    let respuesta_correcta = 0;
-    function oprimir_btn(tipo) {}
     let flipped = false;
-
     function flip(node, { delay = 0, duration = 1500 }) {
         return {
             delay,
@@ -38,28 +31,27 @@
     }
 </script>
 
-<center>
-    <div class="card-widget">
-        {#if flipped}
-            <div
-                class="back"
-                transition:flip
-                style="background-image: url({fondo})"
-            >
-                <div class="align-middle">
-                    <h3>
-                        Si bien te gusta la mod, y algunas tendencias, prefieres no seguir lo que las 
-                        multitudes siguen. Tienes tu propio estilo clásico, pero también original. 
-                        Es todo un reto llevar un estilo propio, original, pero también conservador, 
-                        ¡y tu lo has hecho de manera GENIAL!
-                    </h3>
-                    <button
-                        class="btn btn-primary animate__animated  animate__pulse animate__infinite"
-                        >Ver mas</button
-                    >
-                </div>
+<div class="body-container">
+    {#if flipped}
+        <div
+            class="back"
+            transition:flip
+            style="background-image: url({fondo})"
+        >
+            <div class="align-middle">
+                <h3>
+                    Si bien te gusta la mod, y algunas tendencias, prefieres no seguir lo que las 
+                    multitudes siguen. Tienes tu propio estilo clásico, pero también original. 
+                    Es todo un reto llevar un estilo propio, original, pero también conservador, 
+                    ¡y tu lo has hecho de manera GENIAL!
+                </h3>
+                <button
+                    class="btn btn-primary animate__animated  animate__pulse animate__infinite"
+                    >Ver mas</button
+                >
             </div>
-        {:else}
+        </div>
+    {:else}
             <div class="front">
                 <div class="row">
                     <div class="col-md-12">
@@ -89,13 +81,9 @@
                     {/each}
                 </div>
             </div>{/if}
-    </div>
-</center>
+</div>
 
 <style>
-    .card-widget {
-        max-width: 600px !important;
-    }
     .front {
         background-color: rgb(245, 215, 245);
     }

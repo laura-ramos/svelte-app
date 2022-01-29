@@ -26,7 +26,11 @@
     }
 </script>
 
-<center>
+<div class="body-container">
+    <br>
+    <div class="section-title">
+        <p>Quiz de cultura general</p>
+    </div>
     <div class="widget-quiz">
         {#if datos}
             {#each datos as question, questionIndex}
@@ -57,7 +61,7 @@
                 {/if}
             {/each}
             {#if total_preguntas == preguntas_hechas}
-                <div class="card-final align-self-center" in:fade>
+                <div class="card-final align-self-center text-center" in:fade>
                     <p class="fs-2">{respuesta_correcta}/{total_preguntas}</p>
                     <spam class="text-muted"> 120 respuestas </spam>
                     <p>
@@ -69,14 +73,11 @@
             {/if}
         {/if}
     </div>
-</center>
-
+</div>
 <style>
     .widget-quiz {
-        margin: 10px;
-        max-width: 600px;
+        margin: 25px;
         height: 100%;
-        width: 100%;
     }
     .card::before,
     .card::after {
@@ -126,5 +127,10 @@
     .card-final {
         height: 200px;
         background-color: #f1f1f1;
+    }
+    .section-title{
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.25;
     }
 </style>

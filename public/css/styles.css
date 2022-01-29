@@ -15,3 +15,10 @@
  .active {
    background-color: rgb(16, 214, 148);
  }
+
+.body-container {
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+  max-width: 640px;
+}

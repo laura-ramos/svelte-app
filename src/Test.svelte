@@ -1,0 +1,133 @@
+<script>
+    import { onMount } from "svelte";
+    import { fade, blur, slide, scale, fly} from "svelte/transition";
+    import { flip} from "svelte/animate"
+    let datos = [];
+    let total_preguntas = 0;
+    onMount(async () => {
+        const response = await fetch("../datosTest.json");
+        const data = await response.json();
+        datos = data;
+        total_preguntas = datos.preguntas.length;
+    });
+
+    var preguntas_hechas = 0;
+    let quiz = false;
+    let terminado = false;
+
+    function siguiente() {
+        if (preguntas_hechas == total_preguntas) {
+            terminado = true;
+            quiz = false;
+        } else {
+            preguntas_hechas++;
+        }
+        console.log(total_preguntas+'-'+ preguntas_hechas)
+    }
+
+    function clic() {
+        quiz = true;
+    }
+</script>
+
+<div class="body-container">
+    <div class="card-quiz mb-4">
+        <div class="section-title">
+            <p>Test: ¿Cuál es tu viaje ideal?</p>
+        </div>
+        {#if quiz == true}
+            {#each datos.preguntas as question, questionIndex}
+                {#if preguntas_hechas === questionIndex}
+                <div class="card shadow" in:fade> 
+                    <div class="image-container">
+                        <img
+                            src={question.imagen}
+                            class="card-img-top img-title"
+                            alt="..." transition:slide
+                        />
+                    </div>
+                    <div class="section-title m-2 text-center">
+                        {question.pregunta}
+                    </div>
+                    <div class="card-body" out:blur>
+                        {#each question.opciones as opcion}
+                            <!-- svelte-ignore missing-declaration -->
+                            <buttom class="quiz-answer btn-answer" on:click={siguiente} in:fade>
+                                {opcion}
+                            </buttom>
+                        {/each}
+                    </div>
+                </div>
+                {/if}
+            {/each}
+        {/if}
+        {#if quiz == false && terminado == false}
+            <div class="card shadow" in:slide>
+                <div class="image-container">
+                    <img
+                        src="{datos.imagen}"
+                        class="img-title"
+                        alt="..." transition:slide
+                    />
+                </div>
+                <div class="text-center">
+                    <buttom
+                        class="btn btn-secondary btn-empezar animate__animated  animate__pulse animate__infinite"
+                        type="button"
+                        on:click={clic}>¡Empezar!</buttom
+                    >
+                    <h3 class="card-title mt-2">{datos.titulo}</h3>
+                    <div class="card-body mb-2">
+                        <spam class="text-muted">
+                            {datos.descripcion}
+                        </spam>
+                    </div>
+                </div>
+            </div>
+        {/if}
+
+        {#if total_preguntas == preguntas_hechas}
+            <div class="card shadow" transition:fade={{duration: 500, delay:300}}>
+                <img
+                    src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4b/59/86/caption.jpg?w=500&h=300&s=1"
+                    class="card-img-top img-title"
+                    alt="..."
+                />
+                <div class="section-title m-2 text-center">Paris</div>
+                <div class="card-body">
+                    Al norte de Francia se encuentra la capital del país, una de
+                    las ciudades más importantes en la historia del país galo y
+                    de toda Europa. Con más de dos millones de habitantes es
+                    además una de las capitales más pobladas del viejo
+                    continente y uno de los destinos más visitados de todo el
+                    mundo gracias a su historia, sus actividades culturales, su
+                    gastronomía etc.
+                </div>
+            </div>
+        {/if}
+    </div><br><br>
+</div>
+
+<style>
+    .img-title {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .btn-empezar {
+        margin-top: -20px;
+    }
+
+    .image-container{
+        position: relative;
+        overflow: visible;
+        background-color: #dbdbdb;
+        height: 400px;
+    }
+    .section-title{
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+</style>
