@@ -14,6 +14,7 @@
     var preguntas_hechas = 0;
     let quiz = false;
     let terminado = false;
+    let respuestas = 0;
 
     function siguiente() {
         if (preguntas_hechas == total_preguntas) {
@@ -22,7 +23,6 @@
         } else {
             preguntas_hechas++;
         }
-        console.log(total_preguntas+'-'+ preguntas_hechas)
     }
 
     function clic() {

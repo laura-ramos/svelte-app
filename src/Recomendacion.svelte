@@ -1,18 +1,64 @@
 <script>
     let datos = [
-        {
-            opcion: "Elegancia",
-            img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963520/blvevhbjbdgaua5c22vc.jpg",
-        },
-        {
-            opcion: "Comodidad",
-            img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963488/wd19ares3m1lag5uqtmm.jpg",
-        },
-        {
-            opcion: "Naturalidad",
-            img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963557/qqrm2qzn61vw4aeo3rtf.jpg",
-        },
+            {
+                titulo: "Elige tu personalidad",
+                imagen: "",
+                opciones : [
+                    {
+                        opcion: "Elegancia",
+                        img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963520/blvevhbjbdgaua5c22vc.jpg",
+                        recomendacion: [
+                            "La elegancia es el arte de estar presente tanto hacia uno mismo como hacia los demás. El líder, de forma natural y sin esfuerzo, se amolda a las circunstancias en la mejor posición posible para el beneficio común"
+                        ]
+                    },
+                    {
+                        opcion: "Comodidad",
+                        img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963488/wd19ares3m1lag5uqtmm.jpg",
+                    },
+                    {
+                        opcion: "Naturalidad",
+                        img: "https://img.ex.co/image/upload/ar_1,c_crop/q_auto:best,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1635963557/qqrm2qzn61vw4aeo3rtf.jpg",
+                    }
+                ]
+            },
+            {
+                titulo: "Libros que deberias de leer según tu personalidad",
+                imagen: "",
+                opciones : [
+                    {
+                        opcion: "Introvertidos ",
+                        img: "https://hips.hearstapps.com/es.h-cdn.co/hares/images/cultura/viajes-planes/rasgos-de-las-personas-introvertidas/3989066-1-esl-ES/los-introvertidos-el-atractivo-de-los-que-apenas-hablan.jpg",
+                        recomendacion:[
+                            "La elegancia del erizo (2006),Muriel Barbery",
+                            '"El incidente del perro a medianoche" (2003),Mark Haddon',
+                            '"El retrato del artista adolescente" (1915),James Joyce'
+                        ]
+                    },
+                    {
+                        opcion: "Melancólicos/Nostálgicos",
+                        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOcqyaQarS7ijVfe5txK4WfJ4IJynusy6fyACvBVH9IVtzvEslD-2o4XKZYyfKKzQIjrw&usqp=CAU",
+                        recomendacion: [
+                            '"Los heraldos negros" (1919), César Vallejo',
+                            '"Zero K" (2016), Don DeLilllo',
+                            '"Submarine" (2008), Joe Dunthorne'
+                        ]
+                    },
+                    {
+                        opcion: "Pesimistas",
+                        img: "https://lamenteesmaravillosa.com/wp-content/uploads/2017/04/hombre-triste.png",
+                        recomendacion: [
+                            '"El Idiota" (1868), Fiódor Dostoievski',
+                            '"La carretera", Cormac McCarthy',
+                            '"El proceso" (1925), Franz Kafka'
+                        ]
+                    }
+                ]
+            },
+
     ];
+
+    let pregunta = datos[1];
+
     let flipped = false;
     function flip(node, { delay = 0, duration = 1500 }) {
         return {
@@ -29,54 +75,53 @@
         flipped = !flipped;
         fondo = i;
     }
+    let index = 0;
+    function voltear(i){
+        flipped = !flipped;
+        index = i;
+        console.log(i)
+    }
 </script>
 
 <div class="body-container">
     {#if flipped}
         <div
-            class="back"
+            class="back card"
             transition:flip
-            style="background-image: url({fondo})"
+            style="background-image: url({pregunta.opciones[index].img})"
         >
-            <div class="align-middle">
-                <h3>
-                    Si bien te gusta la mod, y algunas tendencias, prefieres no seguir lo que las 
-                    multitudes siguen. Tienes tu propio estilo clásico, pero también original. 
-                    Es todo un reto llevar un estilo propio, original, pero también conservador, 
-                    ¡y tu lo has hecho de manera GENIAL!
-                </h3>
-                <button
+            <div class="card-body">
+                <div class="text-white">
+                    {#each pregunta.opciones[index].recomendacion as item}
+                        <h5>{item}</h5>
+                    {/each}
+                </div>
+                <div class="text-center mt-3">
+                    <button
                     class="btn btn-primary animate__animated  animate__pulse animate__infinite"
-                    >Ver mas</button
-                >
+                    >Ver mas</button>
+                </div>
+            
             </div>
         </div>
     {:else}
             <div class="front">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="m-5">
-                            ¿Qué Buscas En Las Prendas Que Llevas En Tu Día A Día?
+                        <h3 class="m-5 text-center">
+                            {pregunta.titulo}
                         </h3>
                     </div>
-                    {#each datos as item}
+                    {#each pregunta.opciones as item, index}
                         <div class="col-md-4 col-sm-6 col-6">
-                            <button
-                                class="btn"
-                                type="button"
-                                on:click={() => clic(item.img)}
-                            >
-                                <div class="img-card">
-                                    <img
-                                        alt="Fashion"
-                                        class="img-thumbnail rounded-circle"
-                                        src={item.img}
-                                    />
-                                    <h5 class="card-title">
-                                        {item.opcion}
-                                    </h5>
-                                </div>
+                           <div class="card border-0 bg-transparent">
+                               <button class="btn" on:click={() => voltear(index)}>
+                                   <div class="img-card">
+                                    <img src={item.img} class="card-img-top" alt="...">
+                                    </div>
+                                    <h5 class="card-title">{item.opcion}</h5>
                             </button>
+                           </div>
                         </div>
                     {/each}
                 </div>
@@ -88,20 +133,28 @@
         background-color: rgb(245, 215, 245);
     }
 
-    .back,
-    .front {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        flex-direction: column;
-        text-align: center;
-    }
-
     .back {
         height: 400px;
         width: 600px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
     }
-    .btn:hover .img-thumbnail {
-        max-width: 105%;
+    .img-card{
+        background: transparent;
+        border: none !important;
+    }
+    .img-card{
+        width: 180px;
+        height: 180px;
+        text-align: center;
+    }
+    .img-card img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
     }
 </style>

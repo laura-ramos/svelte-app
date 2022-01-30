@@ -3,6 +3,7 @@
 	import Test from "./Test.svelte";
 	import Quiz from "./Widget.svelte";
 	import Recomendacion from "./Recomendacion.svelte";
+	import Modal from "./Modal.svelte";
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import "../node_modules/animate.css/animate.css";
 </script>
@@ -25,5 +26,8 @@
 	</Route>
 	<Route path="recomendacion">
 		<Recomendacion />
+	</Route>
+	<Route path="modal">
+		<Modal />
 	</Route>
 </Router>
