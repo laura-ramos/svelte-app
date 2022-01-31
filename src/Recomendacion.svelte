@@ -71,15 +71,10 @@
         };
     }
     let fondo = "";
-    function clic(i) {
-        flipped = !flipped;
-        fondo = i;
-    }
     let index = 0;
     function voltear(i){
         flipped = !flipped;
         index = i;
-        console.log(i)
     }
 </script>
 
@@ -91,41 +86,40 @@
             style="background-image: url({pregunta.opciones[index].img})"
         >
             <div class="card-body">
-                <div class="text-white">
+                <div class="text-white card-bg">
                     {#each pregunta.opciones[index].recomendacion as item}
                         <h5>{item}</h5>
                     {/each}
                 </div>
-                <div class="text-center mt-3">
-                    <button
-                    class="btn btn-primary animate__animated  animate__pulse animate__infinite"
-                    >Ver mas</button>
-                </div>
-            
+            </div>
+            <div class="card-footer text-center mt-3 border-0">
+                <button class="btn btn-primary animate__animated  animate__pulse animate__infinite">Ver mas</button>
             </div>
         </div>
     {:else}
-            <div class="front">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="m-5 text-center">
-                            {pregunta.titulo}
-                        </h3>
-                    </div>
-                    {#each pregunta.opciones as item, index}
-                        <div class="col-md-4 col-sm-6 col-6">
-                           <div class="card border-0 bg-transparent">
-                               <button class="btn" on:click={() => voltear(index)}>
-                                   <div class="img-card">
-                                    <img src={item.img} class="card-img-top" alt="...">
-                                    </div>
-                                    <h5 class="card-title">{item.opcion}</h5>
-                            </button>
-                           </div>
-                        </div>
-                    {/each}
+        <div class="front">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="m-5 text-center">
+                        {pregunta.titulo}
+                    </h3>
                 </div>
-            </div>{/if}
+                {#each pregunta.opciones as item, index}
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="card border-0 bg-transparent">
+                            <button class="btn" on:click={() => voltear(index)}>
+                            <center>
+                                <div class="img-card">
+                                <img src={item.img} class="card-img-top" alt="...">
+                                </div>
+                                <h5 class="card-title">{item.opcion}</h5></center>
+                        </button>
+                        </div>
+                    </div>
+                {/each}
+            </div>
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -135,9 +129,9 @@
 
     .back {
         height: 400px;
-        width: 600px;
+        max-width: 600px;
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: cover;
         display: flex;
         flex-flow: column wrap;
         justify-content: center;
@@ -156,5 +150,14 @@
         height: 100%;
         object-fit: cover;
         border-radius: 50%;
+    }
+    .card-body{
+        display: flex;
+        align-items: center;
+    }
+    .card-bg{
+        background: #6c6f727d;
+        width: 100%;
+        padding: 10px;
     }
 </style>

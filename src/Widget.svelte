@@ -31,12 +31,13 @@
     <div class="section-title">
         <p>Quiz de cultura general</p>
     </div>
-    <div class="widget-quiz">
-        {#if datos}
+    {#if datos}
+        <div class="widget-quiz">
+        <br>
             {#each datos as question, questionIndex}
                 {#if preguntas_hechas === questionIndex}
                     <div class="card border-0">
-                        <div class="card-inner" in:fade out:slide>
+                        <div class="card-inner" in:fade>
                             <img
                                 src={question.imagen}
                                 class="card-img-top"
@@ -60,23 +61,23 @@
                     </div>
                 {/if}
             {/each}
-            {#if total_preguntas == preguntas_hechas}
-                <div class="card-final align-self-center text-center" in:fade>
-                    <p class="fs-2">{respuesta_correcta}/{total_preguntas}</p>
-                    <spam class="text-muted"> 120 respuestas </spam>
-                    <p>
-                        <buttom class="btn btn-secondary animate__animated  animate__pulse animate__infinite" on:click={repetir}
-                            >Repetir</buttom
-                        >
-                    </p>
-                </div>
-            {/if}
+        </div>
+        {#if total_preguntas == preguntas_hechas}
+            <div class="card-final align-self-center text-center" in:fade>
+                <div class="fs-1 w-100">{respuesta_correcta}/{total_preguntas}</div>
+            </div>
+            <div class="card-footer">
+                <spam class="text-muted"> 120 personas realizaron este quiz </spam>
+                <buttom class="btn btn-secondary animate__animated  animate__pulse animate__infinite" on:click={repetir}
+                        >Repetir</buttom>
+            </div>
         {/if}
-    </div>
+    {/if}
+    
 </div>
 <style>
     .widget-quiz {
-        margin: 25px;
+        margin-left: 20px;
         height: 100%;
     }
     .card::before,
@@ -127,6 +128,8 @@
     .card-final {
         height: 200px;
         background-color: #f1f1f1;
+        display: flex;
+        align-items: center;
     }
     .section-title{
         font-size: 24px;
