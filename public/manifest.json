@@ -1,0 +1,15 @@
+{
+    "short_name": "Web app",
+    "name": "Ejemplo de pwa",
+    "icons": [
+        {
+            "src": "/icon/progressive.png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#3367D6",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#3367D6"
+}
