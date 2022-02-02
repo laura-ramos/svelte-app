@@ -4,7 +4,8 @@
 	import Quiz from "./Widget.svelte";
 	import Recomendacion from "./Recomendacion.svelte";
 	import Modal from "./Modal.svelte";
-	import Votar from "./Votar.svelte";
+	import Encuesta from "./Encuesta.svelte";
+	import Trivia from "./Trivia.svelte";
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import "../node_modules/animate.css/animate.css";
 </script>
@@ -31,7 +32,10 @@
 	<Route path="modal">
 		<Modal />
 	</Route>
-	<Route path="votar">
-		<Votar />
+	<Route path="encuesta">
+		<Encuesta />
+	</Route>
+	<Route path="trivia">
+		<Trivia />
 	</Route>
 </Router>
