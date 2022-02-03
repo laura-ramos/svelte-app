@@ -1,7 +1,7 @@
 <script>
 	import { Router, Route, Link } from "svelte-routing";
 	import Test from "./Test.svelte";
-	import Quiz from "./Widget.svelte";
+	import Quiz from "./Quiz.svelte";
 	import Recomendacion from "./Recomendacion.svelte";
 	import Modal from "./Modal.svelte";
 	import Encuesta from "./Encuesta.svelte";
@@ -11,13 +11,17 @@
 </script>
 
 <Router>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <div class="navbar-nav">
+			<Link to="quiz" class="nav-item nav-link">Quiz</Link>
+			<Link to="test" class="nav-item nav-link">Test</Link>
+			<Link to="encuesta" class="nav-item nav-link">Encuesta</Link>
+			<Link to="trivia" class="nav-item nav-link">Trivia</Link>
+			<Link to="recomendacion" class="nav-item nav-link">Recomendacion</Link>
+		  </div>
+	  </nav>
 	<Route path="/">
-		<h3>widgets</h3>
-		<!--<iframe
-			src="http://localhost:8080/test"
-			scrolling="no"
-			style="width: 1px; min-width: 100%; height: 772px; border: 0px;"
-		/>-->
+		<Quiz/>
 	</Route>
 
 	<Route path="test">
