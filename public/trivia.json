@@ -1,0 +1,59 @@
+[
+    {
+        "pregunta": "¿Cuál fue la casa de Bellatrix Lestrange cuando estudió en Howgarts?",
+        "img": "https://sm.ign.com/t/ign_latam/screenshot/default/bella_sf93.h720.jpg",
+        "opciones": [
+            {
+                "opcion": "Slytherin",
+                "correcto": true
+            },
+            {
+                "opcion": "Hufflepuff",
+                "correcto": false
+            },
+            {
+                "opcion": "Ravenclaw",
+                "correcto": false
+            }
+        ],
+        "respuesta": "La mayor seguidora de Lord Voldemort está también entre las más peligrosas y su primera aparición es en Harry Potter y el cáliz de fuego. Escapó de la prisión de Azkaban, donde estaba presa por torturar a los padres de Neville Longbottom, Frank y Alice, hasta la locura. En el cine la interpretó Helena Bonham Carter."
+    },
+    {
+        "pregunta": "¿Qué regalo por parte de sus amos hace libres a los elfos domésticos?",
+        "img": "https://s1.eestatic.com/2018/05/02/cultura/libros/harry_potter-literatura-novela_304231460_76055983_1706x1280.jpg",
+        "opciones": [
+            {
+                "opcion": "Un plato caliente",
+                "correcto": false
+            },
+            {
+                "opcion": "Una prenda de vestir",
+                "correcto": true
+            },
+            {
+                "opcion": "Un anillo",
+                "correcto": false
+            }
+        ],
+        "respuesta": "La mayoría de los elfos no quiere pensar siquiera en la libertad, el derecho que exige Dobby. En caso de que desobedezcan, los amos les pueden regalar una prenda de vestir y expulsarles. Toda una ignominia."
+    },
+    {
+        "pregunta": "¿Quién le entrega la capa de invisibilidad a Harry Potter?",
+        "img": "",
+        "opciones": [
+            {
+                "opcion": "Sirius Black",
+                "correcto": false
+            },
+            {
+                "opcion": "Dumbledore",
+                "correcto": true
+            },
+            {
+                "opcion": "Profesora McGonagall",
+                "correcto": false
+            }
+        ],
+        "respuesta": "Fue un regalo de Navidad para Harry, pero Dumbledore se la entregó con una nota sin firma. Pertenecía al padre de Harry, que se la prestó a Dumbledore poco antes de morir para que descubriera si era una Reliquia de la muerte, como lo es la varita de saúco y la piedra de la resurrección."
+    }
+]
