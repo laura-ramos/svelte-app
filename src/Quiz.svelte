@@ -3,26 +3,35 @@
     import { onMount } from "svelte";
     let datos;
     let total_preguntas = 0;
+    let respuestas = [];
     onMount(async () => {
         const response = await fetch("../preguntasYrespuestas.json");
         const data = await response.json();
         datos = data;
         total_preguntas = datos.length;
+        respuestas = Array(datos.length).fill(null);
     });
     let preguntas_hechas = 0;
-    let mostrarRespuesta = false;
     let respuesta_correcta = 0;
+    
     function next(res) {
-        if (res == true) {
-            respuesta_correcta++;
-        }
-        if (preguntas_hechas < total_preguntas) {
-            preguntas_hechas++;
-        }
+        setTimeout(() => {
+            if (res == true) {
+                respuesta_correcta++;
+            }
+            if (preguntas_hechas < total_preguntas) {
+                preguntas_hechas++;
+            }
+        }, 1000);
+    }
+    function selectOption(i,respuesta){
+        respuestas[preguntas_hechas]=i;
+        next(respuesta);
     }
     function repetir() {
         preguntas_hechas = 0;
         respuesta_correcta = 0;
+        respuestas = Array(datos.length).fill(null);
     }
 </script>
 
@@ -34,42 +43,37 @@
     {#if datos}
         <div class="widget-quiz">
         <br>
-            {#each datos as question, questionIndex}
-                {#if preguntas_hechas === questionIndex}
-                    <div class="card border-0">
-                        <div class="card-inner" in:fade>
-                            <img
-                                src={question.imagen}
-                                class="card-img-top"
-                                alt="imagen"
-                            />
-                            <div class="card-body shadow">
-                                <h5 class="card-title">{question.pregunta}</h5>
-                                {#each question.opciones as opcion}
-                                    <div
-                                        class="quiz-answer animate__animated {mostrarRespuesta &&
-                                        opcion.tipo == true
-                                            ? 'animate__pulse active'
-                                            : ''}"
-                                        on:click={next(opcion.tipo)}
-                                    >
-                                        {opcion.respuesta}
-                                    </div>
-                                {/each}
-                            </div>
+        {#each datos as question, questionIndex}
+            {#if preguntas_hechas === questionIndex}
+                <div class="card border-0">
+                    <div class="card-inner" in:fade>
+                        <img
+                            src={question.imagen}
+                            class="card-img-top"
+                            alt="imagen"
+                        />
+                        <div class="card-body shadow">
+                            <h5 class="card-title">{question.pregunta}</h5>
+                            {#each question.opciones as opcion, index}
+                                <div class="btn-custom" class:selected="{respuestas[questionIndex] === index}" on:click={()=>selectOption(index, opcion.tipo)}>
+                                    {opcion.respuesta}
+                                </div>
+                            {/each}
                         </div>
                     </div>
-                {/if}
-            {/each}
+                </div>
+            {/if}
+        {/each}
         </div>
         {#if total_preguntas == preguntas_hechas}
             <div class="card-final align-self-center text-center" in:fade>
+                <h1>Resultados:</h1>
                 <div class="fs-1 w-100">{respuesta_correcta}/{total_preguntas}</div>
             </div>
             <div class="card-footer">
                 <spam class="text-muted"> 120 personas realizaron este quiz </spam>
-                <buttom class="btn btn-secondary animate__animated  animate__pulse animate__infinite" on:click={repetir}
-                        >Repetir</buttom>
+                <button class="btn btn-secondary animate__animated  animate__pulse animate__infinite" on:click={repetir}
+                        >Repetir</button>
             </div>
         {/if}
     {/if}
@@ -128,7 +132,6 @@
     .card-final {
         height: 200px;
         background-color: #f1f1f1;
-        display: flex;
         align-items: center;
     }
     .section-title{

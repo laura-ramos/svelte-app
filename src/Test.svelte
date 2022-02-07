@@ -4,19 +4,20 @@
     import { flip} from "svelte/animate"
     let datos = [];
     let total_preguntas = 0;
+    let respuestas = [];
     onMount(async () => {
         const response = await fetch("../datosTest.json");
         const data = await response.json();
         datos = data;
         total_preguntas = datos.preguntas.length;
+        respuestas = Array(datos.preguntas.length).fill(null);
     });
 
     var preguntas_hechas = 0;
     let quiz = false;
     let terminado = false;
-    let respuestas = 0;
 
-    function siguiente() {
+    function next() {
         if (preguntas_hechas == total_preguntas) {
             terminado = true;
             quiz = false;
@@ -24,8 +25,12 @@
             preguntas_hechas++;
         }
     }
+    function selectOpcion(i){
+        respuestas[preguntas_hechas]=i;
+        next();
+    }
 
-    function clic() {
+    function empezar() {
         quiz = true;
     }
 </script>
@@ -43,18 +48,18 @@
                         <img
                             src={question.imagen}
                             class="card-img-top img-title"
-                            alt="..." transition:slide
+                            alt="..." in:slide
                         />
                     </div>
                     <div class="section-title m-2 text-center">
                         {question.pregunta}
                     </div>
                     <div class="card-body" out:blur>
-                        {#each question.opciones as opcion}
+                        {#each question.opciones as opcion, index}
                             <!-- svelte-ignore missing-declaration -->
-                            <buttom class="quiz-answer btn-answer" on:click={siguiente} in:fade>
+                            <button class="btn-custom w-100" class:selected="{respuestas[questionIndex] === index}" on:click={() => selectOpcion(index)} in:fade>
                                 {opcion}
-                            </buttom>
+                            </button>
                         {/each}
                     </div>
                 </div>
@@ -71,10 +76,10 @@
                     />
                 </div>
                 <div class="text-center">
-                    <buttom
+                    <button
                         class="btn btn-secondary btn-empezar animate__animated  animate__pulse animate__infinite"
                         type="button"
-                        on:click={clic}>¡Empezar!</buttom
+                        on:click={empezar}>¡Empezar!</button
                     >
                     <h3 class="card-title mt-2">{datos.titulo}</h3>
                     <div class="card-body mb-2">

@@ -2,18 +2,21 @@
     import { fade, blur, slide, scale, fly } from "svelte/transition";
     import { onMount } from "svelte";
     let datos = [];
+    let respuestas = [];
     onMount(async () => {
         const response = await fetch("../trivia.json");
         const data = await response.json();
         datos = data;
+        console.log(datos);
+        respuestas = Array(datos.length).fill(null);
     });
     let correcto = 0;
 
-    function respuesta(indexPregunta, respuesta,indexOpcion) {
-         datos[indexPregunta].opciones[indexOpcion].selected = true;
+    function respuesta(indexPregunta, respuesta, indexOpcion) {
+        respuestas[indexPregunta] = indexOpcion;
+        console.log(respuestas);
         setTimeout(() => {
             datos[indexPregunta].ver = true;
-            datos[indexPregunta].select = true;
             if (respuesta == true) {
                 correcto++;
             }
@@ -29,32 +32,21 @@
                     {#if item.ver == true}
                         <div
                             class="text-card text-white"
-                            transition:slide={{ duration: 500, delay: 600 }}
+                            in:slide={{ duration: 500, delay: 600 }}
                         >
                             {item.respuesta}
                         </div>
                     {:else}
-                        <img src={item.img} class="card-img-top" alt="..." />
+                        <img src={item.img} class="img-zoom" alt="..." />
                         <div class="centrado text-white">
                             <h3>{item.pregunta}</h3>
                         </div>
                     {/if}
                 </div>
                 <div class="card-body border">
-                    <div class="d-grid gap-2">
-                        {#each item.opciones as opcion,i}
-                            <button
-                                class="border rounded-pill btn-res {opcion.selected?'is-selected':''} {item.ver &&
-                                opcion.correcto
-                                    ? 'is_correct'
-                                    : ''}"
-                                on:click={() =>
-                                    respuesta(index, opcion.correcto,i)}
-                                disabled={item.ver == true}
-                                >{opcion.opcion}</button
-                            >
-                        {/each}
-                    </div>
+                    {#each item.opciones as opcion, i}
+                    <button class="btn-custom w-100" class:is_correct={item.ver && opcion.correcto} class:selected={respuestas[index] === i} on:click={() => respuesta(index, opcion.correcto, i)} disabled={item.ver == true}>{opcion.opcion}</button>
+                    {/each}
                 </div>
             </div>
             <br />
@@ -81,20 +73,6 @@
         box-sizing: border-box;
         border-radius: 12px 12px 0px 0px;
     }
-    .contenedor-img img {
-        transition: all 0.4s ease;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .contenedor-img img:hover {
-        transform: scale(1.1);
-    }
-    .contenedor-img img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-    }
     .centrado {
         position: absolute;
         top: 30%;
@@ -116,18 +94,5 @@
         text-align: center;
         align-items: center;
     }
-    .is-selected {
-        background-color: #f8f8f8 !important;
-    }
-    .btn-res{
-        transition: 0.4s;
-        background-color: #fff;
-        cursor: pointer;
-    }
-    .btn-res:active{
-        transform: scaleX(0.9);
-    }
-    .btn-res:disabled{
-        color: #000 !important;
-    }
+    
 </style>

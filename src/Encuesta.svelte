@@ -30,7 +30,7 @@
 <div class="body-container">
     <div class="widget-vote">
         <div class="bg-opacity">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-12 text-center text-white mt-2 mb-4">
                 <h2>{data.titulo}</h2>
             </div>
@@ -39,7 +39,7 @@
                 <div class="card bg-transparent">
                     {#if votar == false}
                         <div class="item-img" on:click={clicVotar}>
-                            <img src={item.img} alt="Imagen">
+                            <img src={item.img} class="img-zoom" alt="Imagen">
                         </div>   
                     {:else}
                         <div class="card-votos" transition:blur={{duration: 500, delay: 100}}>
@@ -93,16 +93,5 @@
         height: 180px;
         border-radius: 12px;
         cursor: pointer;
-    }
- 
-    .item-img img {
-        transition: all .4s ease;
-        width:100%;
-        height: 100%;
-        object-fit: cover;
-    }
- 
-    .item-img img:hover {
-        transform:scale(1.2);
     }
 </style>

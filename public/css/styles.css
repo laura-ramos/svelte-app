@@ -1,16 +1,21 @@
- .quiz-answer {
+ .btn-custom {
    background-color: #fff;
-   padding: 5px;
+   padding: 5px 5px 5px 12px;
    margin: 5px;
    border: 1px solid #dbdbdb;
    border-radius: 30px;
    display: block;
+   transition: 0.4s;
  }
 
- .quiz-answer:hover {
-   background-color: #f1f1f1;
+ .btn-custom:hover {
+   background-color: #f2f2f2;
    cursor: pointer;
  }
+
+ .btn-custom:active{
+    transform: scaleX(0.9);
+  }
 
  .active {
    background-color: rgb(16, 214, 148);
@@ -21,4 +26,19 @@
   margin: 0 auto;
   overflow: hidden;
   max-width: 640px;
+}
+
+.selected{
+  background-color: #f2f2f2;
+}
+
+.img-zoom {
+  transition: all .4s ease;
+  width:100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-zoom:hover {
+  transform:scale(1.2);
 }

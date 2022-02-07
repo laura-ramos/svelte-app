@@ -12,12 +12,17 @@
 
 <Router>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		  <div class="navbar-nav">
-			<Link to="quiz" class="nav-item nav-link">Quiz</Link>
-			<Link to="test" class="nav-item nav-link">Test</Link>
-			<Link to="encuesta" class="nav-item nav-link">Encuesta</Link>
-			<Link to="trivia" class="nav-item nav-link">Trivia</Link>
-			<Link to="recomendacion" class="nav-item nav-link">Recomendacion</Link>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<Link to="quiz" class="nav-item nav-link">Quiz</Link>
+				<Link to="test" class="nav-item nav-link">Test</Link>
+				<Link to="encuesta" class="nav-item nav-link">Encuesta</Link>
+				<Link to="trivia" class="nav-item nav-link">Trivia</Link>
+				<Link to="recomendacion" class="nav-item nav-link">Recomendacion</Link>
+			</div>
 		  </div>
 	  </nav>
 	<Route path="/">
