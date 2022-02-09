@@ -4,30 +4,34 @@
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
+    //Obtener las preguntas del archivo json
     onMount(async () => {
-        const response = await fetch("../preguntasYrespuestas.json");
+        const response = await fetch("../data/preguntasYrespuestas.json");
         const data = await response.json();
-        datos = data;
+        datos = data;//asignar las preguntas a la variable datos
         total_preguntas = datos.length;
         respuestas = Array(datos.length).fill(null);
     });
     let preguntas_hechas = 0;
     let respuesta_correcta = 0;
     
-    function next(res) {
+    //funcion para pasar a la siguente pregunta
+    function next(respuesta) {
         setTimeout(() => {
-            if (res == true) {
-                respuesta_correcta++;
+            if (respuesta == true) {
+                respuesta_correcta++;//sumar respuestas correctas
             }
             if (preguntas_hechas < total_preguntas) {
-                preguntas_hechas++;
+                preguntas_hechas++;//sumar preguntas hechas
             }
         }, 1000);
     }
+    //funcion que registra la respuesta de la pregunta
     function selectOption(i,respuesta){
         respuestas[preguntas_hechas]=i;
         next(respuesta);
     }
+    //funcion para repetir el quiz
     function repetir() {
         preguntas_hechas = 0;
         respuesta_correcta = 0;
@@ -76,6 +80,8 @@
                         >Repetir</button>
             </div>
         {/if}
+    {:else}
+        <div>Error al obtener los datos</div>
     {/if}
     
 </div>

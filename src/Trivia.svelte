@@ -1,20 +1,20 @@
 <script>
     import { fade, blur, slide, scale, fly } from "svelte/transition";
     import { onMount } from "svelte";
-    let datos = [];
+    let datos;
     let respuestas = [];
+    //obtener los dattos del archivo json
     onMount(async () => {
-        const response = await fetch("../trivia.json");
+        const response = await fetch("../data/trivia.json");
         const data = await response.json();
-        datos = data;
-        console.log(datos);
+        datos = data;//asignar los datos obtenidos a la variable data
         respuestas = Array(datos.length).fill(null);
     });
     let correcto = 0;
 
+    //Funcion para verificar que la respuesta sea correcta
     function respuesta(indexPregunta, respuesta, indexOpcion) {
         respuestas[indexPregunta] = indexOpcion;
-        console.log(respuestas);
         setTimeout(() => {
             datos[indexPregunta].ver = true;
             if (respuesta == true) {
@@ -25,7 +25,9 @@
 </script>
 
 <div class="body-container">
+    <!--Verificar si existen datos-->
     {#if datos}
+        <!--Mostrar las preguntas-->
         {#each datos as item, index}
             <div class="card border-0">
                 <div class="contenedor-img">
@@ -51,17 +53,13 @@
             </div>
             <br />
         {/each}
-    {:else}
-        <div class="spinner-grow text-info" role="status">
-            <span class="sr-only" />
+        <div class="card">
+            <div class="card-resultado">
+                <h1 class="w-100">{correcto}</h1>
+            </div>
         </div>
-        <p>Cargando.....</p>
     {/if}
-    <div class="card">
-        <div class="card-resultado">
-            <h1 class="w-100">{correcto}</h1>
-        </div>
-    </div>
+
 </div>
 
 <style>

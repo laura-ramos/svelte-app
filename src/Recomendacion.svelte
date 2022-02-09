@@ -1,42 +1,14 @@
 <script>
-    let datos = [
-        {
-            titulo: "Libros que deberias de leer según tu personalidad",
-            imagen: "",
-            opciones: [
-                {
-                    opcion: "Introvertidos ",
-                    img: "https://hips.hearstapps.com/es.h-cdn.co/hares/images/cultura/viajes-planes/rasgos-de-las-personas-introvertidas/3989066-1-esl-ES/los-introvertidos-el-atractivo-de-los-que-apenas-hablan.jpg",
-                    recomendacion: [
-                        "La elegancia del erizo (2006),Muriel Barbery",
-                        '"El incidente del perro a medianoche" (2003),Mark Haddon',
-                        '"El retrato del artista adolescente" (1915),James Joyce',
-                    ],
-                },
-                {
-                    opcion: "Melancólicos/Nostálgicos",
-                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOcqyaQarS7ijVfe5txK4WfJ4IJynusy6fyACvBVH9IVtzvEslD-2o4XKZYyfKKzQIjrw&usqp=CAU",
-                    recomendacion: [
-                        '"Los heraldos negros" (1919), César Vallejo',
-                        '"Zero K" (2016), Don DeLilllo',
-                        '"Submarine" (2008), Joe Dunthorne',
-                    ],
-                },
-                {
-                    opcion: "Pesimistas",
-                    img: "https://lamenteesmaravillosa.com/wp-content/uploads/2017/04/hombre-triste.png",
-                    recomendacion: [
-                        '"El Idiota" (1868), Fiódor Dostoievski',
-                        '"La carretera", Cormac McCarthy',
-                        '"El proceso" (1925), Franz Kafka',
-                    ],
-                },
-            ],
-        },
-    ];
+    let pregunta = [];
+    //obtener los datos 
+    onMount(async () => {
+        const response = await fetch("../data/recomndacion.json");
+        const data = await response.json();
+        pregunta = data;//asignar los datos a la variable
+    });
 
-    let pregunta = datos[0];
     let flipped = false;
+    //funcion para crear la animacion flip
     function flip(node, { delay = 0, duration = 1500 }) {
         return {
             delay,
@@ -48,7 +20,9 @@
         };
     }
     let index = 0;
-    function voltear(i) {
+
+    //funcion para voltear el card cuando se haya seleccionado una opcion
+    function select(i) {
         flipped = !flipped;
         index = i;
     }
@@ -82,7 +56,7 @@
                 {#each pregunta.opciones as item, index}
                     <div class="col-md-4 col-sm-6 col-12">
                         <div class="card-item">
-                            <button class="btn" on:click={() => voltear(index)}>
+                            <button class="btn" on:click={() => select(index)}>
                                 <center>
                                     <div class="img-card">
                                         <img

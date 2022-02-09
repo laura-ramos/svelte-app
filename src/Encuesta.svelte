@@ -1,44 +1,35 @@
 <script>
+    import { onMount } from "svelte";
     import { fade, blur, slide, scale, fly } from "svelte/transition";
-    let data = 
-        {
-            titulo: "Vota por tu jugador favorito",
-            total_votos : 100,
-            opciones: [
-                {
-                    nombre: "Lionel Messi",
-                    img: "https://ichef.bbci.co.uk/news/640/cpsprodpb/E5BA/production/_119801885_75007003-8391-44bf-8f65-c7a5ef8ee259.jpg",
-                    votos: "80",
-                },
-                {
-                    nombre: "Cristiano Ronaldo",
-                    img: "https://imagenes.20minutos.es/files/image_656_370/files/fp/uploads/imagenes/2021/09/29/cristiano-ronaldo.r_d.1684-405-1942.jpeg",
-                    votos: "50",
-                },
-                {
-                    nombre: "Neymar",
-                    img: "https://s1.eestatic.com/2019/08/19/elbernabeu/real-madrid/futbol/neymar_jr-gareth_bale-real_madrid_cf_422718094_132565666_1706x960.jpg",
-                    votos: "50",
-                }
-            ]
-        };
+    let datos;
+    //obtener los datos
+    onMount(async () => {
+        const response = await fetch("../data/encuesta.json");
+        const data = await response.json();
+        //asignar los datos obtenidos a una variable
+        datos = data;
+    });
     let votar = false;
-    function clicVotar(){
+    //funcion para sumar un voto al candidato
+    function sumarVoto(){
+        //falta
         votar = true;
     }
 </script>
 <div class="body-container">
-    <div class="widget-vote">
+    {#if datos}
+            <div class="widget-vote">
         <div class="bg-opacity">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center text-white mt-2 mb-4">
-                <h2>{data.titulo}</h2>
+                <h2>{datos.titulo}</h2>
             </div>
-            {#each data.opciones as item}
+            <!--foreach para mostrar las opciones los candidatos-->
+            {#each datos.opciones as item}
             <div class="col-md-4">
                 <div class="card bg-transparent">
                     {#if votar == false}
-                        <div class="item-img" on:click={clicVotar}>
+                        <div class="item-img" on:click={sumarVoto}>
                             <img src={item.img} class="img-zoom" alt="Imagen">
                         </div>   
                     {:else}
@@ -55,11 +46,13 @@
             </div>
             {/each}
             <div class="col-md-12 text-white mt-4">
-                {data.total_votos} votos
+                {datos.total_votos} votos
             </div>
         </div>
         </div>
     </div>
+    {/if}
+
 </div>
 
 <style>
