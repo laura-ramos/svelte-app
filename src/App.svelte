@@ -7,7 +7,9 @@
 	import Encuesta from "./Encuesta.svelte";
 	import Trivia from "./Trivia.svelte";
 	import Graphql from "./graphql.svelte";
+	import MatchingProduct from "./MatchingProduct.svelte";
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+	import Encuesta2 from "./Encuesta2.svelte";
 	import "../node_modules/animate.css/animate.css";
 </script>
 
@@ -52,5 +54,12 @@
 	</Route>
 	<Route path="graphql">
 		<Graphql></Graphql>
+	</Route>
+	<Route path="matchingProduct">
+		<MatchingProduct/>
+	</Route>
+	<Route path="encuesta2">
+		<!--Widget para realizar una encuesta-->
+		<Encuesta2 />
 	</Route>
 </Router>

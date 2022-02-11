@@ -1,6 +1,6 @@
 <script>
     import { request, gql } from "graphql-request"; //https://github.com/prisma-labs/graphql-request
-    const endpoint = "http://prueba-graph.docksal/graphql";
+    const endpoint = "http://nvi-cs.docksal/graphql";
     //definir los datos que le vamos a pedir
     const query = gql`
         query {
