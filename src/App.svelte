@@ -6,6 +6,7 @@
 	import Recomendacion from "./Recomendacion.svelte";
 	import Encuesta from "./Encuesta.svelte";
 	import Trivia from "./Trivia.svelte";
+	import Graphql from "./graphql.svelte";
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import "../node_modules/animate.css/animate.css";
 </script>
@@ -48,5 +49,8 @@
 	</Route>
 	<Route path="recomendacion">
 		<Recomendacion />
+	</Route>
+	<Route path="graphql">
+		<Graphql></Graphql>
 	</Route>
 </Router>
