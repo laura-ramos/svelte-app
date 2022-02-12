@@ -6,6 +6,7 @@
 	import Recomendacion from "./Recomendacion.svelte";
 	import Encuesta from "./Encuesta.svelte";
 	import Trivia from "./Trivia.svelte";
+	import FlipCard from "./FlipCard.svelte";
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import "../node_modules/animate.css/animate.css";
 </script>
@@ -23,6 +24,7 @@
 				<Link to="encuesta" class="nav-item nav-link">Encuesta</Link>
 				<Link to="trivia" class="nav-item nav-link">Trivia</Link>
 				<Link to="recomendacion" class="nav-item nav-link">Recomendacion</Link>
+				<Link to="flipCard" class="nav-item nav-link">Flip card</Link>
 			</div>
 		  </div>
 	  </nav>
@@ -48,5 +50,8 @@
 	</Route>
 	<Route path="recomendacion">
 		<Recomendacion />
+	</Route>
+	<Route path="flipCard">
+		<FlipCard />
 	</Route>
 </Router>
