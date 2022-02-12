@@ -8,6 +8,7 @@
 	import Trivia from "./Trivia.svelte";
 	import Graphql from "./graphql.svelte";
 	import MatchingProduct from "./MatchingProduct.svelte";
+	import FlipCard from "./FlipCard.svelte";
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import Encuesta2 from "./Encuesta2.svelte";
 	import "../node_modules/animate.css/animate.css";
@@ -26,6 +27,7 @@
 				<Link to="encuesta" class="nav-item nav-link">Encuesta</Link>
 				<Link to="trivia" class="nav-item nav-link">Trivia</Link>
 				<Link to="recomendacion" class="nav-item nav-link">Recomendacion</Link>
+				<Link to="flip" class="nav-item nav-link">Flip card</Link>
 			</div>
 		  </div>
 	  </nav>
@@ -59,7 +61,9 @@
 		<MatchingProduct/>
 	</Route>
 	<Route path="encuesta2">
-		<!--Widget para realizar una encuesta-->
 		<Encuesta2 />
+	</Route>
+	<Route path="flip">
+		<FlipCard />
 	</Route>
 </Router>
