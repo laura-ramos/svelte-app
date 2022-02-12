@@ -1,8 +1,9 @@
 <script>
-    let pregunta = [];
+    import { onMount } from "svelte";
+    let pregunta;
     //obtener los datos 
     onMount(async () => {
-        const response = await fetch("../data/recomndacion.json");
+        const response = await fetch("../data/recomendacion.json");
         const data = await response.json();
         pregunta = data;//asignar los datos a la variable
     });
@@ -29,53 +30,56 @@
 </script>
 
 <div class="body-container">
-    {#if flipped}
-        <div
-            class="back card"
-            in:flip
-            style="background-image: url({pregunta.opciones[index].img})">
-            <div class="text-white card-bg">
-                {#each pregunta.opciones[index].recomendacion as item}
-                    <h5>{item}</h5>
-                {/each}
-            </div>
-            <div class="card-footer text-center mt-3 border-0">
-                <button
-                    class="btn btn-primary animate__animated  animate__pulse animate__infinite"
-                    >Ver mas</button>
-            </div>
-        </div>
-    {:else}
-        <div class="front">
-            <div class="row justify-content-center">
-                <div class="col-md-12">
-                    <h3 class="m-5 text-center">
-                        {pregunta.titulo}
-                    </h3>
+    {#if pregunta}
+        {#if flipped}
+            <div
+                class="back card"
+                in:flip
+                style="background-image: url({pregunta.opciones[index].img})">
+                <div class="text-white card-bg">
+                    {#each pregunta.opciones[index].recomendacion as item}
+                        <h5>{item}</h5>
+                    {/each}
                 </div>
-                {#each pregunta.opciones as item, index}
-                    <div class="col-md-4 col-sm-6 col-12">
-                        <div class="card-item">
-                            <button class="btn" on:click={() => select(index)}>
-                                <center>
-                                    <div class="img-card">
-                                        <img
-                                            src={item.img}
-                                            class="card-img-top img-zoom"
-                                            alt="..."
-                                        />
-                                    </div>
-                                    <h5 class="card-title">
-                                        {item.opcion}
-                                    </h5>
-                                </center>
-                            </button>
-                        </div>
-                    </div>
-                {/each}
+                <div class="card-footer text-center mt-3 border-0">
+                    <button
+                        class="btn btn-primary animate__animated  animate__pulse animate__infinite"
+                        >Ver mas</button>
+                </div>
             </div>
-        </div>
+        {:else}
+            <div class="front">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <h3 class="m-5 text-center">
+                            {pregunta.titulo}
+                        </h3>
+                    </div>
+                    {#each pregunta.opciones as item, index}
+                        <div class="col-md-4 col-sm-6 col-12">
+                            <div class="card-item">
+                                <button class="btn" on:click={() => select(index)}>
+                                    <center>
+                                        <div class="img-card">
+                                            <img
+                                                src={item.img}
+                                                class="card-img-top img-zoom"
+                                                alt="..."
+                                            />
+                                        </div>
+                                        <h5 class="card-title">
+                                            {item.opcion}
+                                        </h5>
+                                    </center>
+                                </button>
+                            </div>
+                        </div>
+                    {/each}
+                </div>
+            </div>
+        {/if} 
     {/if}
+
 </div>
 
 <style>
