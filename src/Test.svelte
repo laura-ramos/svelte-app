@@ -56,7 +56,7 @@
                     </div>
                     <div class="text-center">
                         <button
-                            class="btn btn-secondary btn-empezar animate__animated  animate__pulse animate__infinite"
+                            class="btn btn-secondary btn-empezar pulse"
                             type="button"
                             on:click={empezar}>¡Empezar!</button
                         >

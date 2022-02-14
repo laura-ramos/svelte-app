@@ -7,8 +7,8 @@
 	import Encuesta from "./Encuesta.svelte";
 	import Trivia from "./Trivia.svelte";
 	import FlipCard from "./FlipCard.svelte";
+	import MatchingProduct from "./MatchingProduct.svelte";
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-	import "../node_modules/animate.css/animate.css";
 </script>
 
 <Router>
@@ -25,6 +25,7 @@
 				<Link to="trivia" class="nav-item nav-link">Trivia</Link>
 				<Link to="recomendacion" class="nav-item nav-link">Recomendacion</Link>
 				<Link to="flipCard" class="nav-item nav-link">Flip card</Link>
+				<Link to="match" class="nav-item nav-link">Matching Product</Link>
 			</div>
 		  </div>
 	  </nav>
@@ -53,5 +54,8 @@
 	</Route>
 	<Route path="flipCard">
 		<FlipCard />
+	</Route>
+	<Route path="match">
+		<MatchingProduct />
 	</Route>
 </Router>

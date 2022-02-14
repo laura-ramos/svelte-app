@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-footer text-center mt-3 border-0">
                     <button
-                        class="btn btn-primary animate__animated  animate__pulse animate__infinite"
+                        class="btn btn-primary pulse"
                         >Ver mas</button>
                 </div>
             </div>

@@ -1,0 +1,27 @@
+[
+    {
+        "pregunta": "Hey there! So what brings you to our shop today? Looking for...",
+        "imagen": "https://img.ex.co/image/upload/ar_1.7777777777777777,c_crop/q_auto:good,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1632991606/sygdkcwgmayphk5bkplx.jpg",
+        "opciones": [
+            {"text":"Top", "img":"https://tn.com.ar/resizer/A3ZBgOMp_tchOz1jSsE2lK3oiV0=/1440x0/smart/filters:quality(60)/cloudfront-us-east-1.images.arcpublishing.com/artear/4NUQ5S24O5ABVLTIANSU5EA4NE.jpeg"},
+            {"text":"Dressess","img":"https://bulevarst.com/wp-content/uploads/2020/06/d56714f9778ceeff953acef6af78f731.jpg"},
+            {"text":"Bottoms","img":"https://cdn.cichic.com/media/catalog/product/cache/1/image/5e06319eda06f020e43594a9c230972d/1/9/190301800159-1/light-blue-pockets-buttons-flare-high-waisted-fashion-jeans-pants.jpg"}
+        ]
+    },
+    {
+        "pregunta": "Awesome! So what kind of Bottoms are you looking for?",
+        "imagen": "https://bulevarst.com/wp-content/uploads/2020/06/d56714f9778ceeff953acef6af78f731.jpg",
+        "opciones": [
+            {"text":"Cocktail","img":"https://img.ex.co/image/upload/ar_1.7777777777777777,c_crop/q_auto:good,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1632991606/sygdkcwgmayphk5bkplx.jpg"},
+            {"text":"maxi","img":"https://img.ex.co/image/upload/ar_1.7777777777777777,c_crop/q_auto:good,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1632991606/sygdkcwgmayphk5bkplx.jpg"}
+        ]
+    },
+    {
+        "pregunta": "Pants it is. Finally, what type of budget are we working with today?",
+        "imagen": "https://bulevarst.com/wp-content/uploads/2020/06/d56714f9778ceeff953acef6af78f731.jpg",
+        "opciones": [
+            {"text":"On a budget","img":"https://img.ex.co/image/upload/ar_1.7777777777777777,c_crop/q_auto:good,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1632991606/sygdkcwgmayphk5bkplx.jpg"},
+            {"text":"Willing to sp ","img":"https://img.ex.co/image/upload/ar_1.7777777777777777,c_crop/q_auto:good,f_auto,fl_lossy,w_640,c_limit,dpr_1/v1632991606/sygdkcwgmayphk5bkplx.jpg"}
+        ]
+    }
+]
