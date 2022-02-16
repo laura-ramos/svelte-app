@@ -9,6 +9,8 @@
                     author
                     id
                     title
+                    image_alt
+                    image_url
                 }
             }
         }
@@ -36,11 +38,12 @@
         {#each data.articles.items as articulo}
             <div class="card border-0">
                 <div class="contenedor-img">
-                    <div class="text-card text-white">
-                        {articulo.title}
-                    </div>
+                    <img src={articulo.image_url} alt="">
                 </div>
                 <div class="card-body border">
+                    <div class="text-card">
+                        {articulo.title}
+                    </div>
                     <footer class="blockquote-footer">
                         {articulo.author}
                     </footer>
@@ -61,6 +64,11 @@
         overflow: hidden;
         box-sizing: border-box;
         border-radius: 12px 12px 0px 0px;
+    }
+    .contenedor-img img{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
     }
     .text-card {
         padding: 10px;
