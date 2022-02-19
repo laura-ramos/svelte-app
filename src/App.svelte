@@ -1,5 +1,5 @@
 <script>
-	import { Router, Route, Link } from "svelte-routing";
+	import { Router, Route, Link } from "svelte-navigator";
 	//importar los componentes
 	import Test from "./Test.svelte";
 	import Quiz from "./Quiz.svelte";
@@ -12,11 +12,12 @@
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import Encuesta2 from "./Encuesta2.svelte";
 	import "../node_modules/animate.css/animate.css";
+	
 </script>
 
 <Router>
 	<!--Menu de navegacion-->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		  </button>
@@ -30,7 +31,7 @@
 				<Link to="flip" class="nav-item nav-link">Flip card</Link>
 			</div>
 		  </div>
-	  </nav>
+	  </nav>-->
 	<!--Redireccionar a los diferentes componentes-->
 	<Route path="/">
 		<Quiz/>
@@ -39,9 +40,9 @@
 		<!--Widget para contestar un test-->
 		<Test />
 	</Route>
-	<Route path="quiz">
+	<Route path="quiz/:id" let:params>
 		<!--Widget para realizar el quiz-->
-		<Quiz />
+		<Quiz id="{params.id}"/>
 	</Route>
 	<Route path="encuesta">
 		<!--Widget para realizar una encuesta-->

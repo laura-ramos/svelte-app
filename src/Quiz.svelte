@@ -1,34 +1,59 @@
 <script>
     import { fade, blur, slide, scale, fly } from "svelte/transition";
-    import { onMount } from "svelte";
+    import { useParams } from "svelte-navigator";
+    import { request, gql } from "graphql-request"; //https://github.com/prisma-labs/graphql-request
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
-    //Obtener las preguntas del archivo json
-    onMount(async () => {
-        const response = await fetch("../data/preguntasYrespuestas.json");
-        const data = await response.json();
-        datos = data;//asignar las preguntas a la variable datos
-        total_preguntas = datos.length;
-        respuestas = Array(datos.length).fill(null);
-    });
+    const params = useParams();
+    let id = parseInt($params.id);
+    //endpoint donde vamos a obtener los datos
+    const endpoint = "http://nvi-cs.docksal/graphql/preguntas";
+    //definir el schema de datos que queremos obtener
+    const query = gql`
+        query getTest($id: Int!) {
+            pregunta(id: $id) {
+                title
+                id
+                preguntas {
+                    imagen
+                    opciones {
+                        correcto
+                        text
+                    }
+                    pregunta
+                }
+            }
+        }
+    `;
+    //Parametros que le vamos a enviar a la consulta 
+    const parametros = { id };
+    async function obtenerDatos() {
+        let res = await request(endpoint, query, parametros);
+        console.log(res);
+        total_preguntas = res.pregunta.preguntas.length;
+        respuestas = Array(res.pregunta.preguntas.length).fill(null);
+        return res;
+    }
+    let promise = obtenerDatos();
+
     let preguntas_hechas = 0;
     let respuesta_correcta = 0;
-    
+
     //funcion para pasar a la siguente pregunta
     function next(respuesta) {
         setTimeout(() => {
             if (respuesta == true) {
-                respuesta_correcta++;//sumar respuestas correctas
+                respuesta_correcta++; //sumar respuestas correctas
             }
             if (preguntas_hechas < total_preguntas) {
-                preguntas_hechas++;//sumar preguntas hechas
+                preguntas_hechas++; //sumar preguntas hechas
             }
         }, 1000);
     }
     //funcion que registra la respuesta de la pregunta
-    function selectOption(i,respuesta){
-        respuestas[preguntas_hechas]=i;
+    function selectOption(i, respuesta) {
+        respuestas[preguntas_hechas] = i;
         next(respuesta);
     }
     //funcion para repetir el quiz
@@ -40,51 +65,73 @@
 </script>
 
 <div class="body-container">
-    <br>
-    <div class="section-title">
-        <p>Quiz de cultura general</p>
-    </div>
-    {#if datos}
+    <br />
+    
+    
+    {#await promise}
+        <div class="text-center">
+        <div class="spinner-grow text-dark" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>  
+        </div>
+    {:then data}
+        <div class="section-title">
+            <p>{data.pregunta.title}</p>
+        </div>
         <div class="widget-quiz">
-        <br>
-        {#each datos as question, questionIndex}
-            {#if preguntas_hechas === questionIndex}
-                <div class="card border-0">
-                    <div class="card-inner" in:fade>
-                        <img
-                            src={question.imagen}
-                            class="card-img-top"
-                            alt="imagen"
-                        />
-                        <div class="card-body shadow">
-                            <h5 class="card-title">{question.pregunta}</h5>
-                            {#each question.opciones as opcion, index}
-                                <div class="btn-custom" class:selected="{respuestas[questionIndex] === index}" on:click={()=>selectOption(index, opcion.tipo)}>
-                                    {opcion.respuesta}
-                                </div>
-                            {/each}
+            <br />
+            {#each data.pregunta.preguntas as question, questionIndex}
+                {#if preguntas_hechas === questionIndex}
+                    <div class="card border-0">
+                        <div class="card-inner" in:fade>
+                            <img
+                                src={question.imagen}
+                                class="card-img-top"
+                                alt="imagen"
+                            />
+                            <div class="card-body shadow">
+                                <h5 class="card-title">{question.pregunta}</h5>
+                                {#each question.opciones as opcion, index}
+                                    <div
+                                        class="btn-custom"
+                                        class:selected={respuestas[
+                                            questionIndex
+                                        ] === index}
+                                        on:click={() =>
+                                            selectOption(
+                                                index,
+                                                opcion.correcto
+                                            )}
+                                    >
+                                        {opcion.text}
+                                    </div>
+                                {/each}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {/if}
-        {/each}
+                {/if}
+            {/each}
         </div>
         {#if total_preguntas == preguntas_hechas}
             <div class="card-final align-self-center text-center" in:fade>
                 <h1>Resultados:</h1>
-                <div class="fs-1 w-100">{respuesta_correcta}/{total_preguntas}</div>
+                <div class="fs-1 w-100">
+                    {respuesta_correcta}/{total_preguntas}
+                </div>
             </div>
             <div class="card-footer">
-                <spam class="text-muted"> 120 personas realizaron este quiz </spam>
-                <button class="btn btn-secondary animate__animated  animate__pulse animate__infinite" on:click={repetir}
-                        >Repetir</button>
+                <spam class="text-muted">
+                    120 personas realizaron este quiz
+                </spam>
+                <button
+                    class="btn btn-secondary animate__animated  animate__pulse animate__infinite"
+                    on:click={repetir}>Repetir</button
+                >
             </div>
         {/if}
-    {:else}
-        <div>Error al obtener los datos</div>
-    {/if}
-    
+    {/await}
 </div>
+
 <style>
     .widget-quiz {
         margin-left: 20px;
@@ -140,7 +187,7 @@
         background-color: #f1f1f1;
         align-items: center;
     }
-    .section-title{
+    .section-title {
         font-size: 24px;
         font-weight: 700;
         line-height: 1.25;
