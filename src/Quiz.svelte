@@ -3,17 +3,43 @@
     import CardImagen from "./componentes/card-img.svelte";
     import CardText from "./componentes/card-text.svelte";
     import { onMount } from "svelte";
+    import { useParams } from "svelte-navigator";
+    import { request, gql } from "graphql-request"; //https://github.com/prisma-labs/graphql-request
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
-    //Obtener las preguntas del archivo json
-    onMount(async () => {
-        const response = await fetch("../data/preguntasYrespuestas.json");
-        const data = await response.json();
-        datos = data;//asignar las preguntas a la variable datos
-        total_preguntas = datos.length;
-        respuestas = Array(datos.length).fill(null);
-    });
+    const params = useParams();
+    let id = parseInt($params.id);
+    //endpoint donde vamos a obtener los datos
+    const endpoint = "http://nvi-cs.docksal/graphql/preguntas";
+    //definir el schema de datos que queremos obtener
+    const query = gql`
+        query getTest($id: Int!) {
+            pregunta(id: $id) {
+                title
+                id
+                preguntas {
+                    imagen
+                    opciones {
+                        correcto
+                        text
+                    }
+                    pregunta
+                }
+            }
+        }
+    `;
+    //Parametros que le vamos a enviar a la consulta 
+    const parametros = { id };
+    async function obtenerDatos() {
+        let res = await request(endpoint, query, parametros);
+        console.log(res);
+        total_preguntas = res.pregunta.preguntas.length;
+        respuestas = Array(res.pregunta.preguntas.length).fill(null);
+        return res;
+    }
+    let promise = obtenerDatos();
+
     let preguntas_hechas = 0;
     let respuesta_correcta = 0;
     
@@ -42,14 +68,20 @@
 </script>
 
 <div class="body-container">
-    <br>
-    <div class="section-title">
-        <p>Quiz de cultura general</p>
-    </div>
-    {#if datos}
+    {#await promise}
+        <div class="text-center">
+        <div class="spinner-grow text-dark" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>  
+        </div>
+    {:then data}
+        <br>
+        <div class="section-title">
+            <p>{data.pregunta.title}</p>
+        </div>
         <div class="widget-quiz">
         <br>
-        {#each datos as question, questionIndex}
+        {#each data.pregunta.preguntas as question, questionIndex}
             {#if preguntas_hechas === questionIndex}
                 <div class="card border-0">
                     <div class="card-inner" in:fade>
@@ -57,8 +89,8 @@
                         <div class="card-body shadow">
                             <h5 class="card-title mb-4">{question.pregunta}</h5>
                             {#each question.opciones as opcion, index}
-                                <div class="btn-custom" class:selected="{respuestas[questionIndex] === index}" on:click={()=>selectOption(index, opcion.tipo)}>
-                                    {opcion.respuesta}
+                                <div class="btn-custom" on:click={()=>selectOption(index, opcion.correcto)}>
+                                    {opcion.text}
                                 </div>
                             {/each}
                         </div>
@@ -77,9 +109,8 @@
                 </div>
             </div> 
         {/if}
-    {:else}
-        <div>Error al obtener los datos</div>
-    {/if}
+    {/await}
+   
     
 </div>
 <style>
@@ -125,5 +156,16 @@
 
     .card::after {
         transform: translate(-20px, -20px);
+    }
+    @media (max-width: 400px) {
+        .card::before {
+        content: none;
+        }
+        .card::after {
+            content: none;
+        }
+        .widget-quiz {
+            margin: 0px;
+        }
     }
 </style>

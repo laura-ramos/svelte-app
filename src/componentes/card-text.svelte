@@ -12,7 +12,7 @@
 
 <style>
     .card-text {
-        background: linear-gradient(40deg, #45cafc, #303f9f);
+        background: #000;
         align-items: center;
         justify-content: center;
         display: flex;
