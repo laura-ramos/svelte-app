@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { fade, blur, slide, scale, fly} from "svelte/transition";
+    import CardImagen from "./componentes/card-img.svelte";
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
@@ -40,7 +41,6 @@
 
 <div class="body-container">
     {#if datos}
-        <div class="card-quiz mb-4">
             <div class="section-title">
                 <p>Test: ¿Cuál es tu viaje ideal?</p>
             </div>
@@ -70,21 +70,16 @@
                 </div>
             {/if}
             {#if quiz == true}
-            <!--Mostrar las preguntas-->
+                <!--Mostrar las preguntas-->
                 {#each datos.preguntas as question, questionIndex}
                     {#if preguntas_hechas === questionIndex}
-                    <div class="card shadow" in:fade> 
-                        <div class="image-container">
-                            <img
-                                src={question.imagen}
-                                class="card-img-top img-title"
-                                alt="..."
-                            />
-                        </div>
-                        <div class="section-title m-2 text-center">
-                            {question.pregunta}
-                        </div>
-                        <div class="card-body">
+                    {preguntas_hechas+1}/{total_preguntas}
+                    <div class="shadow">
+                        <CardImagen imagen={question.imagen} alt=""></CardImagen> 
+                        <div class="card-body border">
+                            <div class="section-title m-2 text-center">
+                                {question.pregunta}
+                            </div>
                             <!--mostrar las opciones de respuesta de las preguntas-->
                             {#each question.opciones as opcion, index}
                                 <button class="btn-custom w-100" class:selected="{respuestas[questionIndex] === index}" on:click={() => selectOpcion(index)}>
@@ -93,19 +88,16 @@
                             {/each}
                         </div>
                     </div>
+                        
                     {/if}
                 {/each}
             {/if}
             <!--Verificar si todas las preguntas fueron repondidas y mostrar el resultado final-->
             {#if total_preguntas == preguntas_hechas}
-                <div class="card shadow" transition:fade={{duration: 500, delay:300}}>
-                    <img
-                        src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4b/59/86/caption.jpg?w=500&h=300&s=1"
-                        class="card-img-top img-title"
-                        alt="..."
-                    />
-                    <div class="section-title m-2 text-center">Paris</div>
-                    <div class="card-body">
+            <div class="shadow" transition:fade={{duration: 500, delay:300}}>
+                <CardImagen imagen='https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4b/59/86/caption.jpg?w=500&h=300&s=1'></CardImagen>
+                    <div class="card-body border">
+                        <div class="section-title m-2 text-center">Paris</div>
                         Al norte de Francia se encuentra la capital del país, una de
                         las ciudades más importantes en la historia del país galo y
                         de toda Europa. Con más de dos millones de habitantes es
@@ -114,9 +106,9 @@
                         mundo gracias a su historia, sus actividades culturales, su
                         gastronomía etc.
                     </div>
-                </div>
+            </div>
             {/if}
-        </div><br><br>
+        <br><br>
     {/if}
 </div>
 
@@ -136,10 +128,5 @@
         overflow: visible;
         background-color: #dbdbdb;
         height: 400px;
-    }
-    .section-title{
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 1.25;
     }
 </style>

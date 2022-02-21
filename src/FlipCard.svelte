@@ -1,4 +1,6 @@
 <script>
+    import CardImagen from "./componentes/card-img.svelte";
+    import CardText from "./componentes/card-text.svelte";
     //funcion para crear la animacion flip
     function flip(node, { delay = 0, duration = 1000 }) {
         return {
@@ -39,57 +41,41 @@
 <div class="body-container">
     <h2>10 Datos curiosos</h2>
     {#each datos as item, index}
-         {#if item.flipped}
-            <div class="back card" in:flip >
-                <div class="card-body text-descripcion" on:click={()=>select(index)}>
-                    {item.descripcion}
-                </div>
+    <div class="card-rotate">
+        {#if item.flipped}
+            <div in:flip on:click={()=>select(index)}>
+                <CardText descripcion={item.descripcion}></CardText>
                 <div class="card-footer text-center">
                     <a class="btn btn-light text-decoration-none" href="/">Ver mas</a>
                 </div>
             </div>
         {:else}
-            <div class="front card" on:click={()=>select(index)} style="background-image: url({item.imagen})">
-                <div class="card-body text-center p-0">
-                    <div class="text-image"><h2>{item.pregunta}</h2></div> 
-                </div>
+            <div class="" on:click={()=>select(index)}>
+                <CardImagen pregunta={item.pregunta} imagen={item.imagen} alt=""></CardImagen>
                 <div class="card-footer text-center">
                     <p class="mt-1">Click para voltear</p> 
                 </div>
             </div>
         {/if}
+    </div>
+
         <br>
     {/each}
 
 </div>
 
 <style>
-    .back .card-body, .front .card-body {
-        align-items: center;
-        justify-content: center;
-        display: flex;
-    }
-
-    .front, .back{
-        height: 400px;
-        max-width: 640px;
-        color: rgb(255, 255, 255);
-        background-image: linear-gradient(236deg, rgb(176, 41, 255), rgb(141, 33, 204));
-        background-repeat: no-repeat;
-        object-fit: cover;
+    .card-footer{
+        background: #6b6d6f;
+        color: #fff;
         cursor: pointer;
     }
-    .front .card-footer{
-        background-color: rgba(0,0,0,0.55);
-        border: none;
+    .card-rotate{
+        -webkit-transition: 0.5s linear;
+        transition: 0.5s linear;
     }
-    .text-descripcion{
-        text-align: justify;
-        font-size: 1.2em;
-    }
-    .text-image{
-        background-color: #5851c39e;
-        padding: 10px;
-        width: 100%;
+    .card-rotate:hover{
+        -webkit-transform: perspective(1000px) rotateY(5deg);
+        transform: perspective(1000px) rotateY(5deg);
     }
 </style>

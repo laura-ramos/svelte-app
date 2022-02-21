@@ -1,6 +1,8 @@
 <script>
     import { fade, blur, slide, scale, fly } from "svelte/transition";
     import { onMount } from "svelte";
+    import CardImagen from "./componentes/card-img.svelte";
+    import CardText from "./componentes/card-text.svelte";
     let datos;
     let respuestas = [];
     //obtener los dattos del archivo json
@@ -27,24 +29,18 @@
 <div class="body-container">
     <!--Verificar si existen datos-->
     {#if datos}
+        <div class="section-title">
+            <p>Que tanto sabes de Harry Poter!!</p>
+        </div>
         <!--Mostrar las preguntas-->
         {#each datos as item, index}
+            <h3>{index+1}/{respuestas.length}</h3>
+            {#if item.ver == true}
+                <CardText descripcion={item.respuesta}></CardText>
+            {:else}
+                <CardImagen pregunta={item.pregunta} imagen={item.img} alt=""></CardImagen>
+            {/if}
             <div class="card border-0">
-                <div class="contenedor-img">
-                    {#if item.ver == true}
-                        <div
-                            class="text-card text-white"
-                            in:slide={{ duration: 500, delay: 600 }}
-                        >
-                            {item.respuesta}
-                        </div>
-                    {:else}
-                        <img src={item.img} class="img-zoom" alt="..." />
-                        <div class="centrado text-white">
-                            <h3>{item.pregunta}</h3>
-                        </div>
-                    {/if}
-                </div>
                 <div class="card-body border">
                     {#each item.opciones as opcion, i}
                     <button class="btn-custom w-100" class:is_correct={item.ver && opcion.correcto} class:selected={respuestas[index] === i} on:click={() => respuesta(index, opcion.correcto, i)} disabled={item.ver == true}>{opcion.opcion}</button>
@@ -53,44 +49,13 @@
             </div>
             <br />
         {/each}
-        <div class="card">
-            <div class="card-resultado">
-                <h1 class="w-100">{correcto}</h1>
-            </div>
-        </div>
+        <CardText title={correcto}></CardText>
     {/if}
-
+    <br>
 </div>
 
 <style>
-    .contenedor-img {
-        text-align: center;
-        height: 300px;
-        background-color: #000;
-        overflow: hidden;
-        box-sizing: border-box;
-        border-radius: 12px 12px 0px 0px;
-    }
-    .centrado {
-        position: absolute;
-        top: 30%;
-        background: #77777791;
-    }
-    .text-card {
-        padding: 10px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
     .is_correct {
         border-color: #198754 !important;
-    }
-    .card-resultado {
-        height: 300px;
-        display: flex;
-        text-align: center;
-        align-items: center;
-    }
-    
+    }  
 </style>

@@ -43,6 +43,12 @@
   transform:scale(1.2);
 }
 
+.section-title{
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
 .pulse {
   animation: pulse-animation 2s infinite;
 }

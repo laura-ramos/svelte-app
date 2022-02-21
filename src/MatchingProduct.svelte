@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { fade, blur, slide, scale, fly } from "svelte/transition";
+    import CardImagen from "./componentes/card-img.svelte";
     let datos;
     let total_preguntas = 0;
     //Obtener las preguntas del archivo json
@@ -24,13 +25,7 @@
         <div class="bg-white">
             {#each datos as pregunta, questionIndex}
                 {#if preguntas_hechas === questionIndex}
-                    <div class="image-container">
-                        <img
-                            src={pregunta.imagen}
-                            class="card-img"
-                            alt="..."
-                        />
-                    </div>
+                    <CardImagen imagen={pregunta.imagen}></CardImagen>
                     <div class="card-title text-center">
                         <h2>
                             {pregunta.pregunta}
@@ -57,14 +52,6 @@
 </div>
 
 <style>
-    .image-container{
-        height: 400px;
-    }
-    .image-container img{
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
     .card_item_image {
         width: 180px;
         height: 180px;

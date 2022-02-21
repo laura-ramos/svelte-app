@@ -1,5 +1,7 @@
 <script>
     import { fade, blur, slide, scale, fly } from "svelte/transition";
+    import CardImagen from "./componentes/card-img.svelte";
+    import CardText from "./componentes/card-text.svelte";
     import { onMount } from "svelte";
     let datos;
     let total_preguntas = 0;
@@ -51,13 +53,9 @@
             {#if preguntas_hechas === questionIndex}
                 <div class="card border-0">
                     <div class="card-inner" in:fade>
-                        <img
-                            src={question.imagen}
-                            class="card-img-top"
-                            alt="imagen"
-                        />
+                        <CardImagen imagen={question.imagen} alt=""></CardImagen>
                         <div class="card-body shadow">
-                            <h5 class="card-title">{question.pregunta}</h5>
+                            <h5 class="card-title mb-4">{question.pregunta}</h5>
                             {#each question.opciones as opcion, index}
                                 <div class="btn-custom" class:selected="{respuestas[questionIndex] === index}" on:click={()=>selectOption(index, opcion.tipo)}>
                                     {opcion.respuesta}
@@ -70,15 +68,14 @@
         {/each}
         </div>
         {#if total_preguntas == preguntas_hechas}
-            <div class="card-final align-self-center text-center" in:fade>
-                <h1>Resultados:</h1>
-                <div class="fs-1 w-100">{respuesta_correcta}/{total_preguntas}</div>
-            </div>
-            <div class="card-footer">
-                <spam class="text-muted"> 120 personas realizaron este quiz </spam>
-                <button class="btn btn-secondary animate__animated  animate__pulse animate__infinite" on:click={repetir}
-                        >Repetir</button>
-            </div>
+            <div in:slide>
+                <CardText title={respuesta_correcta}/{total_preguntas}></CardText>
+                <div class="card-footer bg-secondary">
+                    <spam class="text-muted"> 120 personas realizaron este quiz </spam>
+                    <button class="btn btn-light pulse" on:click={repetir}
+                            >Repetir</button>
+                </div>
+            </div> 
         {/if}
     {:else}
         <div>Error al obtener los datos</div>
@@ -122,27 +119,11 @@
         border: 1px solid #f1f1f1;
     }
 
-    .card-inner img {
-        height: 200px;
-        object-fit: cover;
-    }
-
     .card::before {
         transform: translate(-10px, -10px);
     }
 
     .card::after {
         transform: translate(-20px, -20px);
-    }
-
-    .card-final {
-        height: 200px;
-        background-color: #f1f1f1;
-        align-items: center;
-    }
-    .section-title{
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 1.25;
     }
 </style>
