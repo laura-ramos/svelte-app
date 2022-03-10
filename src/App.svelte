@@ -8,7 +8,6 @@
 	import Trivia from "./Trivia.svelte";
 	import FlipCard from "./FlipCard.svelte";
 	import MatchingProduct from "./MatchingProduct.svelte";
-	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 </script>
 
 <Router>
@@ -59,3 +58,10 @@
 		<MatchingProduct />
 	</Route>
 </Router>
+
+<style global>
+	@tailwind base;
+	@tailwind components;
+	@tailwind utilities;
+  </style>
+  
