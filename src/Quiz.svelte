@@ -2,15 +2,20 @@
     import { fade, blur, slide, scale, fly } from "svelte/transition";
     import CardImagen from "./componentes/card-img.svelte";
     import CardText from "./componentes/card-text.svelte";
+    import Progress from "./componentes/progress.svelte";
+    import Counter from "./componentes/counter.svelte";
+    import CardImgText from "./componentes/card-img-text.svelte";
     import { onMount } from "svelte";
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
+    let terminado = false;
     //Obtener las preguntas del archivo json
     onMount(async () => {
         const response = await fetch("../data/preguntasYrespuestas.json");
         const data = await response.json();
         datos = data;//asignar las preguntas a la variable datos
+        console.log(datos)
         total_preguntas = datos.length;
         respuestas = Array(datos.length).fill(null);
     });
@@ -31,99 +36,72 @@
     //funcion que registra la respuesta de la pregunta
     function selectOption(i,respuesta){
         respuestas[preguntas_hechas]=i;
+        datos[preguntas_hechas].contestada = true;
         next(respuesta);
+
     }
     //funcion para repetir el quiz
     function repetir() {
         preguntas_hechas = 0;
         respuesta_correcta = 0;
         respuestas = Array(datos.length).fill(null);
+        datos[preguntas_hechas].contestada = false
     }
 </script>
 
-<div class="body-container">
+<div class="grid justify-center items-center">
     <br>
-    <div class="section-title">
+    <div class="m-2 text-2xl font-semibold leading-tight">
         <p>Quiz de cultura general</p>
     </div>
     {#if datos}
-        <div class="widget-quiz">
-        <br>
-        {#each datos as question, questionIndex}
-            {#if preguntas_hechas === questionIndex}
-                <div class="card border-0">
-                    <div class="card-inner" in:fade>
-                        <CardImagen imagen={question.imagen} alt=""></CardImagen>
-                        <div class="card-body shadow">
-                            <h5 class="card-title mb-4">{question.pregunta}</h5>
-                            {#each question.opciones as opcion, index}
-                                <div class="btn-custom" class:selected="{respuestas[questionIndex] === index}" on:click={()=>selectOption(index, opcion.tipo)}>
-                                    {opcion.respuesta}
-                                </div>
-                            {/each}
-                        </div>
+        <div class="widget">
+            {#if total_preguntas == preguntas_hechas}
+                <div class="card shadow-xl" in:slide style="width: 500px;">
+                    <CardText title={respuesta_correcta}/{total_preguntas}></CardText>
+                    <div class="p-4">
+                        <p class="mb-4"> 120 personas realizaron este quiz </p>
+                        <button class="btn animate-bounce" on:click={repetir}>Repetir</button>
                     </div>
                 </div>
-            {/if}
-        {/each}
-        </div>
-        {#if total_preguntas == preguntas_hechas}
-            <div in:slide>
-                <CardText title={respuesta_correcta}/{total_preguntas}></CardText>
-                <div class="card-footer bg-secondary">
-                    <spam class="text-muted"> 120 personas realizaron este quiz </spam>
-                    <button class="btn btn-light pulse" on:click={repetir}
-                            >Repetir</button>
+            {:else}
+                <div class="flex justify-between mr-2">
+                    <Progress steps={total_preguntas} current={preguntas_hechas} past={respuestas}/>
+                    <Counter total={total_preguntas} current={preguntas_hechas+1}/> 
                 </div>
-            </div> 
-        {/if}
+                {#each datos as question, questionIndex}
+                    {#if preguntas_hechas === questionIndex}
+                        <div class="w-full bg-white rounded shadow-xl p-4 mt-4">
+                            <!-- svelte-ignore a11y-img-redundant-alt -->
+                            <div class="w-full -mt-9">
+                                <CardImagen imagen={question.imagen} alt=""></CardImagen> 
+                            </div>
+                            <div class="card-body">
+                                <h2 class="card-title">{question.pregunta}</h2>
+                                <div class="text-gray-700">
+                                    {#each question.opciones as opcion, index}
+                                    <button class="btn btn-sm btn-block btn-outline mt-2" class:btn-info={opcion.tipo == true && question.contestada} on:click={()=>selectOption(index, opcion.tipo)}>
+                                        {opcion.respuesta}
+                                    </button>
+                                    {/each}
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
+                {/each}
+            {/if}
+        </div>
     {:else}
         <div>Error al obtener los datos</div>
     {/if}
     
+    <CardImgText imagen="https://unamglobal.unam.mx/wp-content/uploads/2018/08/vacaciones.jpg" texto="Cual es tu viaje ideal" alt=""/> 
+    <br>
 </div>
+
+
 <style>
-    .widget-quiz {
-        margin-left: 20px;
-        height: 100%;
-    }
-    .card::before,
-    .card::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-    }
-
-    .card::before,
-    .card::after {
-        border: 1px solid #f1f1f1;
-        transition: transform 0.5s;
-        border-radius: 4px;
-        box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
-        background-color: #fff;
-    }
-
-    .card::before,
-    .card-inner {
-        z-index: 1;
-    }
-
-    .card-inner {
-        background: #fff;
-        position: relative;
-        border-radius: 4px;
-        box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
-        border: 1px solid #f1f1f1;
-    }
-
-    .card::before {
-        transform: translate(-10px, -10px);
-    }
-
-    .card::after {
-        transform: translate(-20px, -20px);
+    .widget {
+        max-width: 640px;
     }
 </style>

@@ -2,7 +2,6 @@
     import { onMount } from "svelte";
     import { fade, blur, slide, scale, fly} from "svelte/transition";
     import CardImagen from "./componentes/card-img.svelte";
-    import Test2 from "./Test2.svelte";
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
@@ -48,22 +47,20 @@
             </div>
             <!--Tarjeta que se muestra al inicio antes de reponder el test-->
             {#if quiz == false && terminado == false}
-                 <!--
                     <div class="card shadow" in:slide>
-                    <div class="image-container">
+                    <div class="">
                         <img
                             src="{datos.imagen}"
                             class="img-title"
-                            alt="..."
+                            alt=""
                         />
                     </div>
                     <div class="text-center">
                         <button
-                            class="btn btn-secondary btn-empezar pulse"
+                            class="btn btn-secondary pulse -mt-10 animate-bounce"
                             type="button"
-                            on:click={empezar}>¡Empezar!</button
-                        >
-                        <h3 class="card-title mt-2">{datos.titulo}</h3>
+                            on:click={empezar}>¡Empezar!</button>
+                        <h3 class="mt-4 mb-4 text-xl font-semibold leading-tight">{datos.titulo}</h3>
                         <div class="card-body mb-2">
                             <spam class="text-muted">
                                 {datos.descripcion}
@@ -71,42 +68,16 @@
                         </div>
                     </div>
                 </div>  
-                 -->
-                 <div class="text-gray-900 flex">
-                 <div>
-                   <img
-                     src={datos.imagen}
-                     alt=""
-                     class="w-full object-cover object-center rounded-lg shadow-md"
-                   />
-                   <div class="relative px-4 -mt-16 text-center">
-                     <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <button
-                        class="btn btn-secondary animate-bounce"
-                        type="button"
-                        on:click={empezar}>¡Empezar!</button>
-                       <h4 class="mt-4 mb-4 text-xl font-semibold leading-tight truncate">
-                         Test: ¿Cual es tu viaje ideal?
-                       </h4>
-                       <div class="mt-3">
-                         Paris, Nueva york, sidney, Dubai... ¡Descubre cual es tu destino ideal
-                         y haz la maleta!
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
             {/if}
             {#if quiz == true}
                 <!--Mostrar las preguntas-->
                 {#each datos.preguntas as question, questionIndex}
                     {#if preguntas_hechas === questionIndex}
                     {preguntas_hechas+1}/{total_preguntas}
-                    <div class="text-gray-900">
-                        <div>
+                    <div class="card shadow-lg">
                         <CardImagen imagen={question.imagen} alt=""></CardImagen> 
-                        <div class="relative px-4 -mt-16 text-center">
-                            <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <div class="">
+                            <div class="bg-white p-6">
                                 <div class="card-title mb-4">
                                 {question.pregunta}
                             </div>
@@ -119,8 +90,6 @@
                             </div>
                           
                         </div>  
-                        </div>
-
                     </div>
                         
                     {/if}
@@ -150,7 +119,6 @@
         <br><br>
     </div>
     {/if}
-    <Test2/>
 </div>
 <style>
     .widget {

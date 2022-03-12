@@ -1,15 +1,20 @@
 <script>
+    /**
+     * Componente donde se muestra una imagen o imagen con texto
+     */
     export let pregunta;
     export let imagen;
     export let alt;
+    export let zoom;
+    zoom = true;
     alt = "";
 </script>
 
-<div class="img-card image-full" style="height: 300px;">
-        <img
-            src={imagen}
-            alt={alt}
-        />
+<div class="overflow-hidden bg-amber-500 rounded-lg shadow-md" style="height: 400px;">
+    <img
+        src={imagen}
+        alt={alt} class="w-full h-full object-cover object-center rounded-lg shadow-md {zoom ? 'transform hover:scale-110 duration-200':''}"
+    />
     {#if pregunta}
         <div class="card-text">
             <h2 class="card-title text-white">
@@ -19,39 +24,3 @@
     {/if}
 </div>
 
-<style>
-    .img-card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        background: linear-gradient(40deg,#ffd86f,#fc6262);
-        overflow: hidden;
-    }
-    .card-text {
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        height: inherit;
-    }
-    .card-title {
-        background: rgb(0 0 0 / 20%);
-        padding: 10px;
-        width: 100%;
-    }
-    .img-card.image-full {
-        display: grid;
-    }
-    .img-card.image-full:before,
-    .img-card.image-full > * {
-        grid-column-start: 1;
-        grid-row-start: 1;
-    }
-
-    .img-card img:hover {
-        transform:scale(1.2);
-    }
-    .img-card{
-        overflow: hidden;
-        cursor: pointer;
-    }
-</style>
