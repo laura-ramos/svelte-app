@@ -22,7 +22,7 @@
     <div class="widget-vote" style="background-image: url(https://estaticos.muyinteresante.es/uploads/images/test/5b1e6f125cafe8f1173c986b/futbol1.jpg)">
         <div class="bg-opacity p-4 bg-slate-400/25">
             <h2 class="text-2xl mb-4 text-center">{datos.titulo}</h2>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
                 <!--foreach para mostrar las opciones los candidatos-->
                 {#each datos.opciones as item}
                     <div class="avatar grid">
@@ -30,8 +30,9 @@
                             <img src={item.img} class="transform hover:scale-110 duration-200 cursor-pointer" alt="Imagen" on:click={sumarVoto}>
                         </div>
                         {#if votar == true}
-                            <div class="w-48 rounded-xl bg-slate-400/50 absolute" in:blur={{duration: 500, delay: 100}}>
-                                <h2 class="text-white w-100 flex items-center h-full justify-center text-4xl">
+                            <div class="w-48 rounded-xl bg-slate-400/25 absolute" in:blur={{duration: 500, delay: 100}}>
+                                <div class="bg-sky-500/75 w-full absolute items-end bottom-0 anim" style="height: {item.votos}%;"></div>
+                                <h2 class="text-white text-4xl absolute text-votos">
                                     {item.votos}%
                                 </h2>
                             </div>
@@ -47,7 +48,7 @@
     </div>
 
     <br>
-    <div class="widget">
+    <div class="md:w-[40rem] sm:w-full w-full">
         <div class="bg-white rounded-lg shadow">
           <div class="border-t-8 border-pink-600 rounded-lg flex">
             <div class="w-full p-3">
@@ -62,7 +63,7 @@
                         </div>
                         {#if votar == true}
                         <div class="w-48 rounded-full absolute">
-                            <div class="bg-sky-500/75 w-full absolute items-end bottom-0" style="height: {item.votos}%;"></div>
+                            <div class="bg-sky-500/75 w-full absolute items-end bottom-0 anim" style="height: {item.votos}%;"></div>
                             <h2 class="text-white text-4xl absolute text-votos">
                                 {item.votos}%
                             </h2>
@@ -78,17 +79,30 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
     {/if}
 </div>
 
 <style>
-    .widget {
-        max-width: 640px;
-    }
     .text-votos{
         left: 50%;
         top: 50%;
         transform: translateX(-50%) translateY(-50%);
+    }
+    .anim{
+        animation: slideinBottom 3s linear 0s 1 normal none;
+    }
+    @keyframes slideinBottom {
+        0% {
+            opacity: 0;
+            transform: rotateX(-70deg);
+            transform-origin: bottom;
+        }
+
+        100% {
+            opacity: 1;
+            transform: rotateX(0);
+            transform-origin: bottom;
+        }
     }
 </style>

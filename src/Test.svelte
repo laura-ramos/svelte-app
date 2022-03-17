@@ -3,6 +3,7 @@
     import { fade, blur, slide, scale, fly} from "svelte/transition";
     import CardImagen from "./componentes/card-img.svelte";
     import Test2 from "./Test2.svelte";
+    import Counter from "./componentes/counter.svelte";
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
@@ -21,12 +22,14 @@
 
     //funcion para pasar a la siguiente pregunta
     function next() {
-        if (preguntas_hechas == total_preguntas) {
-            terminado = true;
-            quiz = false;
-        } else {
-            preguntas_hechas++;//sumar preguntas realizadas
-        }
+        setTimeout(() => {
+            if (preguntas_hechas == total_preguntas) {
+                quiz = false;
+            } else {
+                preguntas_hechas++;//sumar preguntas realizadas
+            }
+        }, 1000);
+        
     }
     //guardar la respuesta seleccionada
     function selectOpcion(i){
@@ -42,36 +45,12 @@
 
 <div class="grid justify-center items-center justify-items-center">
     {#if datos}
-    <div class="widget">
-            <div class="section-title">
+    <div class="md:w-[40rem] sm:w-full w-full">
+            <div class="m-2 text-2xl font-semibold leading-tight">
                 <p>Test: ¿Cuál es tu viaje ideal?</p>
             </div>
             <!--Tarjeta que se muestra al inicio antes de reponder el test-->
-            {#if quiz == false && terminado == false}
-                 <!--
-                    <div class="card shadow" in:slide>
-                    <div class="image-container">
-                        <img
-                            src="{datos.imagen}"
-                            class="img-title"
-                            alt="..."
-                        />
-                    </div>
-                    <div class="text-center">
-                        <button
-                            class="btn btn-secondary btn-empezar pulse"
-                            type="button"
-                            on:click={empezar}>¡Empezar!</button
-                        >
-                        <h3 class="card-title mt-2">{datos.titulo}</h3>
-                        <div class="card-body mb-2">
-                            <spam class="text-muted">
-                                {datos.descripcion}
-                            </spam>
-                        </div>
-                    </div>
-                </div>  
-                 -->
+            {#if quiz == false}
                  <div class="text-gray-900 flex">
                  <div>
                    <img
@@ -101,7 +80,9 @@
                 <!--Mostrar las preguntas-->
                 {#each datos.preguntas as question, questionIndex}
                     {#if preguntas_hechas === questionIndex}
-                    {preguntas_hechas+1}/{total_preguntas}
+                    <div class="mr-2 text-right">
+                        <Counter total={total_preguntas} current={preguntas_hechas+1}/> 
+                    </div>
                     <div class="text-gray-900">
                         <div>
                         <CardImagen imagen={question.imagen} alt=""></CardImagen> 
@@ -131,9 +112,9 @@
             <div class="text-gray-900">
                 <div>
                     <CardImagen imagen='https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4b/59/86/caption.jpg?w=500&h=300&s=1'></CardImagen>
-                    <div class="relative px-4 -mt-16 text-center">
+                    <div class="relative px-4 -mt-16">
                         <div class="bg-white p-6 rounded-lg shadow-lg">
-                            <div class="card-title">Paris</div>
+                            <div class="mt-4 mb-4 text-xl font-semibold leading-tight text-center">Paris</div>
                             Al norte de Francia se encuentra la capital del país, una de
                             las ciudades más importantes en la historia del país galo y
                             de toda Europa. Con más de dos millones de habitantes es
@@ -152,8 +133,3 @@
     {/if}
     <Test2/>
 </div>
-<style>
-    .widget {
-        max-width: 640px;
-    }
-</style>

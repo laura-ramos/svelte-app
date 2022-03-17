@@ -2,77 +2,73 @@
     import { onMount } from "svelte";
     import { fade, blur, slide, scale, fly } from "svelte/transition";
     import CardImagen from "./componentes/card-img.svelte";
+    import CalcularResultados from "./componentes/calcular-resultados.svelte";
     let datos;
     let total_preguntas = 0;
+    let respuestas = [];
     //Obtener las preguntas del archivo json
     onMount(async () => {
         const response = await fetch("../data/opciones.json");
         const data = await response.json();
         datos = data; //asignar las preguntas a la variable datos
         total_preguntas = data.length;
+        respuestas = Array(datos.length).fill(null);
     });
     let preguntas_hechas = 0;
-    function next() {
-        if (preguntas_hechas == total_preguntas-1) {
-        //terminado
-        }else{
+    function next(i) {
+        datos[preguntas_hechas].clic = true;
+        respuestas[preguntas_hechas]=i;
+            console.log(datos)
+        setTimeout(() => {
             preguntas_hechas++;
-        }
+ 
+        }, 2000);
+
     }
 </script>
-<div class="body-container">
+<div class="grid justify-center items-center">
     {#if datos}
-        <div class="bg-white">
+        <div class="md:w-[40rem] sm:w-full w-full">
             {#each datos as pregunta, questionIndex}
                 {#if preguntas_hechas === questionIndex}
                     <CardImagen imagen={pregunta.imagen}></CardImagen>
-                    <div class="card-title text-center">
+                    <div class="card-title m-2">
                         <h2>
                             {pregunta.pregunta}
                         </h2>
                     </div>
                     <div class="card-body">
-                        <div class="row justify-content-center">
-                            {#each pregunta.opciones as item}
-                                <div class="col-md-4 text-center col-md-4 col-sm-6 col-12">
-                                    <div class="card_item_image" on:click={next}>
-                                        <div class="card_image">
-                                            <img src={item.img} alt="" />
-                                        </div>
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
+                            {#each pregunta.opciones as item, index}
+                                <div class="avatar grid">
+                                    <div class="w-44 rounded-xl hover:shadow-2xl" on:click={() => next(index)}>
+                                        <img src={item.img} alt="" class="transform hover:scale-110 duration-200 cursor-pointer" />
                                     </div>
-                                    <h5>{item.text}</h5>
+                                    {#if respuestas[questionIndex] == index}
+                                    <div class="w-44 rounded-xl absolute flex justify-center m-2">
+                                        <svg class="h-10 w-10 text-white bg-lime-600 rounded-full" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  
+                                            <path stroke="none" d="M0 0h24v24H0z"/>
+                                            <path d="M5 12l5 5l10 -10" />
+                                        </svg>
+                                     </div>
+                                        <!-- 
+                                        <div class="w-44 rounded-xl absolute bg-lime-600/50 transition delay-300 duration-700">
+                                            <svg class="h-10 w-10 text-white bg-lime-600 rounded-full"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M5 12l5 5l10 -10" />
+                                            </svg>
+                                         </div>
+                                         -->
+                                    {/if}
+                                    <h5 class="mt-3 text-center font-semibold">{item.text}</h5>
                                 </div>
                             {/each}
                         </div>
                     </div>
                 {/if}
             {/each}
+            {#if preguntas_hechas == total_preguntas}
+                <CalcularResultados/>
+            {/if}
+            
         </div>
     {/if}
 </div>
-
-<style>
-    .card_item_image {
-        width: 180px;
-        height: 180px;
-        border-radius: 40px;
-        cursor: pointer;
-        transition: 0.4s;
-    }
-    .card_item_image .card_image {
-        width: inherit;
-        height: inherit;
-        border-radius: 40px;
-    }
-    .card_item_image .card_image img {
-        width: inherit;
-        height: inherit;
-        border-radius: 40px;
-        object-fit: cover;
-    }
-    .card_item_image:hover {
-        transform: scale(0.9, 0.9);
-        box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.25),
-            -2px -2px 20px 5px rgba(0, 0, 0, 0.22);
-    }
-</style>

@@ -3,6 +3,6 @@
     export let current;
 </script>
 <div>
-    <b>{current}</b>
-    <span class="text-slate-400"> / {total}</span>
+    <b class="text-3xl">{current}</b>
+    <span class="text-slate-400 text-base"> / {total}</span>
 </div>

@@ -1,7 +1,11 @@
 module.exports = {
   content: ['./src/**/*.svelte', './src/**/*.html'],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        '640': '40rem',
+      }
+    },
   },
   plugins: [
     require("daisyui")

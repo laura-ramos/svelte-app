@@ -5,17 +5,17 @@
     import Progress from "./componentes/progress.svelte";
     import Counter from "./componentes/counter.svelte";
     import CardImgText from "./componentes/card-img-text.svelte";
+    import CalcularResultados from "./componentes/calcular-resultados.svelte";
+    import CardResultados from "./componentes/card-resultados.svelte";
     import { onMount } from "svelte";
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
-    let terminado = false;
     //Obtener las preguntas del archivo json
     onMount(async () => {
         const response = await fetch("../data/preguntasYrespuestas.json");
         const data = await response.json();
         datos = data;//asignar las preguntas a la variable datos
-        console.log(datos)
         total_preguntas = datos.length;
         respuestas = Array(datos.length).fill(null);
     });
@@ -25,11 +25,15 @@
     //funcion para pasar a la siguente pregunta
     function next(respuesta) {
         setTimeout(() => {
+            preguntas_hechas++
             if (respuesta == true) {
-                respuesta_correcta++;//sumar respuestas correctas
+                respuesta_correcta++;//sumar respuestas correctas  
             }
-            if (preguntas_hechas < total_preguntas) {
-                preguntas_hechas++;//sumar preguntas hechas
+            console.log(preguntas_hechas+'-'+total_preguntas)
+            if (preguntas_hechas == total_preguntas) {
+                //preguntas_hechas++;//sumar preguntas hechas
+                calcularResultados();
+                console.log(8)
             }
         }, 1000);
     }
@@ -47,6 +51,13 @@
         respuestas = Array(datos.length).fill(null);
         datos[preguntas_hechas].contestada = false
     }
+    let calcular = false;
+    function calcularResultados(){
+        calcular = true;
+        setTimeout(() => {
+            calcular = false;
+        }, 1000);
+    }
 </script>
 
 <div class="grid justify-center items-center">
@@ -55,15 +66,14 @@
         <p>Quiz de cultura general</p>
     </div>
     {#if datos}
-        <div class="widget">
+        <div class="md:w-[40rem]">
+            
             {#if total_preguntas == preguntas_hechas}
-                <div class="card shadow-xl" in:slide style="width: 500px;">
-                    <CardText title={respuesta_correcta}/{total_preguntas}></CardText>
-                    <div class="p-4">
-                        <p class="mb-4"> 120 personas realizaron este quiz </p>
-                        <button class="btn animate-bounce" on:click={repetir}>Repetir</button>
-                    </div>
-                </div>
+                {#if calcular}
+                    <CalcularResultados/>
+                {:else}
+                    <CardResultados correcto={respuesta_correcta} total={total_preguntas}/>
+                {/if}
             {:else}
                 <div class="flex justify-between mr-2">
                     <Progress steps={total_preguntas} current={preguntas_hechas} past={respuestas}/>
@@ -71,7 +81,7 @@
                 </div>
                 {#each datos as question, questionIndex}
                     {#if preguntas_hechas === questionIndex}
-                        <div class="w-full bg-white rounded shadow-xl p-4 mt-4">
+                        <div class="w-full bg-white rounded shadow-xl p-4 mt-4 w-slide">
                             <!-- svelte-ignore a11y-img-redundant-alt -->
                             <div class="w-full -mt-9">
                                 <CardImagen imagen={question.imagen} alt=""></CardImagen> 
@@ -95,13 +105,23 @@
         <div>Error al obtener los datos</div>
     {/if}
     
-    <CardImgText imagen="https://unamglobal.unam.mx/wp-content/uploads/2018/08/vacaciones.jpg" texto="Cual es tu viaje ideal" alt=""/> 
-    <br>
 </div>
 
 
 <style>
-    .widget {
-        max-width: 640px;
+    .w-slide {
+        animation: slidein 1s ease 0s 1 normal none;
+    }
+
+    @keyframes slidein {
+        0% {
+        opacity: 0;
+        transform: translateX(250px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
 </style>

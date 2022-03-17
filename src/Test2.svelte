@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import { fade, blur, slide, scale, fly} from "svelte/transition";
     import CardImagen from "./componentes/card-img.svelte";
+    import CardResultados from "./componentes/card-resultados.svelte";
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
@@ -41,7 +42,7 @@
 
 <div class="grid justify-center items-center justify-items-center">
     {#if datos}
-    <div class="widget">
+    <div class="md:w-[40rem] sm:w-full w-full">
             <div class="section-title">
                 <p>Test: ¿Cuál es tu viaje ideal?</p>
             </div>
@@ -74,7 +75,7 @@
                 {#each datos.preguntas as question, questionIndex}
                     {#if preguntas_hechas === questionIndex}
                     {preguntas_hechas+1}/{total_preguntas}
-                    <div class="card shadow-lg">
+                    <div class="shadow-lg">
                         <CardImagen imagen={question.imagen} alt=""></CardImagen> 
                         <div class="">
                             <div class="bg-white p-6">
@@ -97,31 +98,9 @@
             {/if}
             <!--Verificar si todas las preguntas fueron repondidas y mostrar el resultado final-->
             {#if total_preguntas == preguntas_hechas}
-            <div class="text-gray-900">
-                <div>
-                    <CardImagen imagen='https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4b/59/86/caption.jpg?w=500&h=300&s=1'></CardImagen>
-                    <div class="relative px-4 -mt-16 text-center">
-                        <div class="bg-white p-6 rounded-lg shadow-lg">
-                            <div class="card-title">Paris</div>
-                            Al norte de Francia se encuentra la capital del país, una de
-                            las ciudades más importantes en la historia del país galo y
-                            de toda Europa. Con más de dos millones de habitantes es
-                            además una de las capitales más pobladas del viejo
-                            continente y uno de los destinos más visitados de todo el
-                            mundo gracias a su historia, sus actividades culturales, su
-                            gastronomía etc.
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+                <CardResultados correcto='' total={total_preguntas}/>
             {/if}
         <br><br>
     </div>
     {/if}
 </div>
-<style>
-    .widget {
-        max-width: 640px;
-    }
-</style>

@@ -29,88 +29,46 @@
     }
 </script>
 
-<div class="body-container">
+<div class="grid justify-center items-center">
     {#if pregunta}
-        {#if flipped}
-            <div
-                class="back card"
-                in:flip
-                style="background-image: url({pregunta.opciones[index].img})">
-                <div class="text-white card-bg">
-                    {#each pregunta.opciones[index].recomendacion as item}
-                        <h5>{item}</h5>
-                    {/each}
-                </div>
-                <div class="card-footer text-center mt-3 border-0">
-                    <button
-                        class="btn btn-primary pulse"
-                        >Ver mas</button>
-                </div>
-            </div>
-        {:else}
-            <div class="front">
-                <div class="row justify-content-center">
-                    <div class="col-md-12">
-                        <h3 class="m-5 text-center">
-                            {pregunta.titulo}
-                        </h3>
-                    </div>
-                    {#each pregunta.opciones as item, index}
-                        <div class="col-md-4 col-sm-6 col-12">
-                            <div class="card-item">
-                                <button class="btn" on:click={() => select(index)}>
-                                    <center>
-                                        <div class="img-card">
-                                            <img
-                                                src={item.img}
-                                                class="card-img-top img-zoom"
-                                                alt="..."
-                                            />
-                                        </div>
-                                        <h5 class="card-title">
-                                            {item.opcion}
-                                        </h5>
-                                    </center>
-                                </button>
-                            </div>
-                        </div>
-                    {/each}
-                </div>
-            </div>
-        {/if} 
+    <div class="tinder loaded transition flex-col overflow-hidden opacity-0">
+        <div class="tinder--cards grow text-center content-center items-end">
+          <div class="tinder--card bg-white will-change-transform absolute inline-block overflow-hidden removed" style="z-index: 5;opacity: 1;touch-action: pan-y;user-select: none;-webkit-user-drag: none;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);transform: translate(-1878px, 176.727px) rotate(-2.3265deg);">
+            <img src="https://placeimg.com/600/300/people" class="w-full" alt="">
+            <h3>Demo card 1</h3>
+            <p>This is a demo for Tinder like swipe cards</p>
+          </div>
+          <div class="tinder--card bg-white will-change-transform absolute inline-block overflow-hidden" style="z-index: 5; opacity: 1; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate(2817px, -100px) rotate(-30deg);">
+            <img src="https://placeimg.com/600/300/animals" class="w-full" alt="">
+            <h3>Demo card 2</h3>
+            <p>This is a demo for Tinder like swipe cards</p>
+          </div>
+          <div class="tinder--card bg-white will-change-transform absolute inline-block overflow-hidden" style="z-index: 5; transform: scale(1) translateY(0px); opacity: 1; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+            <img src="https://placeimg.com/600/300/nature" class="w-full" alt="">
+            <h3>Demo card 3</h3>
+            <p>This is a demo for Tinder like swipe cards</p>
+          </div>
+          <div class="tinder--card bg-white will-change-transform absolute inline-block overflow-hidden" style="z-index: 4; transform: scale(0.95) translateY(-30px); opacity: 0.9; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+            <img src="https://placeimg.com/600/300/tech" class="w-full" alt="">
+            <h3>Demo card 4</h3>
+            <p>This is a demo for Tinder like swipe cards</p>
+          </div>
+          <div class="tinder--card bg-white will-change-transform absolute inline-block overflow-hidden" style="z-index: 3; transform: scale(0.9) translateY(-60px); opacity: 0.8; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+            <img src="https://placeimg.com/600/300/arch" class="w-full" alt="">
+            <h3>Demo card 5</h3>
+            <p>This is a demo for Tinder like swipe cards</p>
+          </div>
+        </div>
+      </div>
     {/if}
-
 </div>
-
 <style>
-    .front {
-        background-color: rgb(245, 215, 245);
-    }
 
-    .back {
-        height: 400px;
-        max-width: 600px;
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: center;
-    }
+.loaded.tinder {
+  opacity: 1;
+}
 
-    .img-card {
-        border-radius: 50%;
-        overflow: hidden;
-        width: 180px;
-        height: 180px;
-    }
-    .card-bg {
-        background: #6c6f727d;
-        width: 100%;
-        padding: 10px;
-    }
-    .card-item {
-        display: flex;
-        flex-direction: column;
-        word-wrap: break-word;
-    }
+.tinder--card {
+  max-width: 300px;
+}
 </style>

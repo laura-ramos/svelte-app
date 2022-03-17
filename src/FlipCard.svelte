@@ -1,6 +1,7 @@
 <script>
     import CardImagen from "./componentes/card-img.svelte";
     import CardText from "./componentes/card-text.svelte";
+    import CardImgText from "./componentes/card-img-text.svelte";
     //funcion para crear la animacion flip
     function flip(node, { delay = 0, duration = 1000 }) {
         return {
@@ -38,42 +39,33 @@
     ];
 </script>
 
-<div class="body-container">
-    <h2>10 Datos curiosos</h2>
-    {#each datos as item, index}
-    <div class="card-rotate">
-        {#if item.flipped}
-            <div in:flip on:click={()=>select(index)}>
-                <CardText descripcion={item.descripcion}></CardText>
-                <div class="card-footer text-center">
-                    <a class="btn btn-light text-decoration-none" href="/">Ver mas</a>
+<div class="grid justify-center items-center">
+    <h2 class="m-2 text-2xl font-semibold leading-tight">10 Datos curiosos</h2>
+    <div class="md:w-[40rem] sm:w-full w-full">
+        {#each datos as item, index}
+        <div class="card-rotate transition duration-500">
+            {#if item.flipped}
+                <div in:flip on:click={()=>select(index)} class="cursor-pointer">
+                    <CardText descripcion={item.descripcion}></CardText>
+                    <div class="text-center">
+                        <p class="">Click para voltear</p> 
+                    </div>
                 </div>
-            </div>
-        {:else}
-            <div class="" on:click={()=>select(index)}>
-                <CardImagen pregunta={item.pregunta} imagen={item.imagen} alt=""></CardImagen>
-                <div class="card-footer text-center">
-                    <p class="mt-1">Click para voltear</p> 
+            {:else}
+                <div on:click={()=>select(index)} class="cursor-pointer">
+                    <CardImgText texto={item.pregunta} imagen={item.imagen} alt=""></CardImgText>
+                    <div class="text-center">
+                        <p class="">Click para voltear</p> 
+                    </div>
                 </div>
-            </div>
-        {/if}
-    </div>
-
+            {/if}
+        </div>
         <br>
-    {/each}
-
+        {/each} 
+    </div>
 </div>
 
 <style>
-    .card-footer{
-        background: #6b6d6f;
-        color: #fff;
-        cursor: pointer;
-    }
-    .card-rotate{
-        -webkit-transition: 0.5s linear;
-        transition: 0.5s linear;
-    }
     .card-rotate:hover{
         -webkit-transform: perspective(1000px) rotateY(5deg);
         transform: perspective(1000px) rotateY(5deg);
