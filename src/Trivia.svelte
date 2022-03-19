@@ -67,7 +67,7 @@
 </div>
 <style>
     .slideUp{
-        transition: transform .8s cubic-bezier(.63,-0.32,.4,1.39);
+        animation: slidein 1s ease 0s 1 normal none;
     }
     @keyframes slidein {
         0% {
