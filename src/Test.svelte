@@ -4,36 +4,39 @@
     import CardImagen from "./componentes/card-img.svelte";
     import Test2 from "./Test2.svelte";
     import Counter from "./componentes/counter.svelte";
-    let datos;
-    let total_preguntas = 0;
-    let respuestas = [];
-    let preguntas_hechas = 0;
+    //variables
+    let questions = []; //preguntas
+    let question_length = 0; //numero de preguntas
+    let user_responses = []; //respuestas
+    let select_answer; //pregunta seleccionada
+    let question_index = 0; //preguntas hechas
+    let score = 0; //numero de respuestas correctas
     let quiz = false;
-    let terminado = false;
+
     //obtener los datos del archivo json
     onMount(async () => {
         const response = await fetch("../data/datosTest.json");
         const data = await response.json();
         //asignar los datos obtenidos a una variable
-        datos = data;
-        total_preguntas = datos.preguntas.length;
-        respuestas = Array(datos.preguntas.length).fill(null);
+        questions = data;
+        question_length = questions.preguntas.length;
+        user_responses = Array(question_length).fill(null);
     });
 
     //funcion para pasar a la siguiente pregunta
     function next() {
         setTimeout(() => {
-            if (preguntas_hechas == total_preguntas) {
+            if (question_index == question_length) {
                 quiz = false;
             } else {
-                preguntas_hechas++;//sumar preguntas realizadas
+                question_index++;//sumar preguntas realizadas
             }
         }, 1000);
         
     }
     //guardar la respuesta seleccionada
     function selectOpcion(i){
-        respuestas[preguntas_hechas]=i;
+        user_responses[question_index]=i;
         next();//pasar a la siguiente pregunta
     }
 
@@ -44,7 +47,7 @@
 </script>
 
 <div class="grid justify-center items-center justify-items-center">
-    {#if datos}
+    {#if questions}
     <div class="md:w-[40rem] sm:w-full w-full">
             <div class="m-2 text-2xl font-semibold leading-tight">
                 <p>Test: ¿Cuál es tu viaje ideal?</p>
@@ -54,7 +57,7 @@
                  <div class="text-gray-900 flex">
                  <div>
                    <img
-                     src={datos.imagen}
+                     src={questions.imagen}
                      alt=""
                      class="w-full object-cover object-center rounded-lg shadow-md"
                    />
@@ -78,10 +81,10 @@
             {/if}
             {#if quiz == true}
                 <!--Mostrar las preguntas-->
-                {#each datos.preguntas as question, questionIndex}
-                    {#if preguntas_hechas === questionIndex}
+                {#each questions.preguntas as question, index}
+                    {#if question_index === index}
                     <div class="mr-2 text-right">
-                        <Counter total={total_preguntas} current={preguntas_hechas+1}/> 
+                        <Counter total={question_length} current={question_index+1}/> 
                     </div>
                     <div class="text-gray-900">
                         <div>
@@ -92,8 +95,8 @@
                                 {question.pregunta}
                             </div>
                             <!--mostrar las opciones de respuesta de las preguntas-->
-                            {#each question.opciones as opcion, index}
-                                <button class="btn btn-sm btn-block btn-outline mt-2" class:selected="{respuestas[questionIndex] === index}" on:click={() => selectOpcion(index)}>
+                            {#each question.opciones as opcion, i}
+                                <button class="btn btn-sm btn-block btn-outline mt-2" class:selected="{user_responses[index] === i}" on:click={() => selectOpcion(index)}>
                                     {opcion}
                                 </button>
                             {/each}
@@ -108,7 +111,7 @@
                 {/each}
             {/if}
             <!--Verificar si todas las preguntas fueron repondidas y mostrar el resultado final-->
-            {#if total_preguntas == preguntas_hechas}
+            {#if question_length == question_index}
             <div class="text-gray-900">
                 <div>
                     <CardImagen imagen='https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4b/59/86/caption.jpg?w=500&h=300&s=1'></CardImagen>

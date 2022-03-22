@@ -1,37 +1,42 @@
 <script>
     import { onMount } from "svelte";
-    import { fade, blur, slide, scale, fly} from "svelte/transition";
+    import { fade, blur, slide, scale, fly } from "svelte/transition";
     import CardImagen from "./componentes/card-img.svelte";
     import CardResultados from "./componentes/card-resultados.svelte";
-    let datos;
-    let total_preguntas = 0;
-    let respuestas = [];
-    let preguntas_hechas = 0;
+    import Counter from "./componentes/counter.svelte";
+    //variables
+    let questions = []; //preguntas
+    let question_length = 0; //numero de preguntas
+    let user_responses = []; //respuestas
+    let select_answer; //pregunta seleccionada
+    let question_index = 0; //preguntas hechas
+    let score = 0; //numero de respuestas correctas
     let quiz = false;
-    let terminado = false;
+    let finish = false;
+
     //obtener los datos del archivo json
     onMount(async () => {
         const response = await fetch("../data/datosTest.json");
         const data = await response.json();
         //asignar los datos obtenidos a una variable
-        datos = data;
-        total_preguntas = datos.preguntas.length;
-        respuestas = Array(datos.preguntas.length).fill(null);
+        questions = data;
+        question_length = questions.preguntas.length;
+        user_responses = Array(questions.preguntas.length).fill(null);
     });
 
     //funcion para pasar a la siguiente pregunta
     function next() {
-        if (preguntas_hechas == total_preguntas) {
+        if (question_index == question_length) {
             terminado = true;
             quiz = false;
         } else {
-            preguntas_hechas++;//sumar preguntas realizadas
+            question_index++; //sumar preguntas realizadas
         }
     }
     //guardar la respuesta seleccionada
-    function selectOpcion(i){
-        respuestas[preguntas_hechas]=i;
-        next();//pasar a la siguiente pregunta
+    function selectOpcion(i) {
+        user_responses[question_index] = i;
+        next(); //pasar a la siguiente pregunta
     }
 
     //empezar el test
@@ -41,66 +46,78 @@
 </script>
 
 <div class="grid justify-center items-center justify-items-center">
-    {#if datos}
-    <div class="md:w-[40rem] sm:w-full w-full">
-            <div class="section-title">
+    {#if questions}
+        <div class="md:w-[40rem] sm:w-full w-full">
+            <div class="m-2 text-2xl font-semibold leading-tight">
                 <p>Test: ¿Cuál es tu viaje ideal?</p>
             </div>
             <!--Tarjeta que se muestra al inicio antes de reponder el test-->
-            {#if quiz == false && terminado == false}
-                    <div class="card shadow" in:slide>
+            {#if quiz == false && finish == false}
+                <div class="card shadow" in:slide>
                     <div class="">
-                        <img
-                            src="{datos.imagen}"
-                            class="img-title"
-                            alt=""
-                        />
+                        <img src={questions.imagen} class="img-title" alt="" />
                     </div>
                     <div class="text-center">
                         <button
                             class="btn btn-secondary pulse -mt-10 animate-bounce"
                             type="button"
-                            on:click={empezar}>¡Empezar!</button>
-                        <h3 class="mt-4 mb-4 text-xl font-semibold leading-tight">{datos.titulo}</h3>
+                            on:click={empezar}>¡Empezar!</button
+                        >
+                        <h3
+                            class="mt-4 mb-4 text-xl font-semibold leading-tight"
+                        >
+                            {questions.titulo}
+                        </h3>
                         <div class="card-body mb-2">
                             <spam class="text-muted">
-                                {datos.descripcion}
+                                {questions.descripcion}
                             </spam>
                         </div>
                     </div>
-                </div>  
+                </div>
             {/if}
             {#if quiz == true}
                 <!--Mostrar las preguntas-->
-                {#each datos.preguntas as question, questionIndex}
-                    {#if preguntas_hechas === questionIndex}
-                    {preguntas_hechas+1}/{total_preguntas}
-                    <div class="shadow-lg">
-                        <CardImagen imagen={question.imagen} alt=""></CardImagen> 
-                        <div class="">
-                            <div class="bg-white p-6">
-                                <div class="card-title mb-4">
-                                {question.pregunta}
+                <div class="mr-2 text-right">
+                    <Counter
+                        total={question_length}
+                        current={question_index + 1}
+                    />
+                </div>
+                {#each questions.preguntas as question, index}
+                    {#if question_index === index}
+                        <div class="shadow-lg">
+                            <div in:blur={{ duration: 500, delay: 500 }}>
+                                <CardImagen imagen={question.imagen} alt="" />
                             </div>
-                            <!--mostrar las opciones de respuesta de las preguntas-->
-                            {#each question.opciones as opcion, index}
-                                <button class="btn btn-sm btn-block btn-outline mt-2" class:selected="{respuestas[questionIndex] === index}" on:click={() => selectOpcion(index)}>
-                                    {opcion}
-                                </button>
-                            {/each}
+
+                            <div class="">
+                                <div class="bg-white p-6">
+                                    <div class="card-title mb-4">
+                                        {question.pregunta}
+                                    </div>
+                                    <!--mostrar las opciones de respuesta de las preguntas-->
+                                    <div>
+                                        {#each question.opciones as opcion, i}
+                                            <button in:blur={{duration: 700, delay: 200*i}}
+                                                class="btn btn-sm btn-block btn-outline mt-2 transition"
+                                                class:selected={user_responses[index] === i}
+                                                on:click={() => selectOpcion(i)}>
+                                                {opcion}
+                                            </button>
+                                        {/each}
+                                    </div>
+                                </div>
                             </div>
-                          
-                        </div>  
-                    </div>
-                        
+                        </div>
                     {/if}
                 {/each}
             {/if}
             <!--Verificar si todas las preguntas fueron repondidas y mostrar el resultado final-->
-            {#if total_preguntas == preguntas_hechas}
-                <CardResultados correcto='' total={total_preguntas}/>
+            {#if question_length == question_index}
+                <CardResultados score="" total={question_length} />
             {/if}
-        <br><br>
-    </div>
+            <br /><br />
+        </div>
     {/if}
 </div>

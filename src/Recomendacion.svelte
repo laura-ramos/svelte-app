@@ -88,15 +88,15 @@
             <p>{item.text}</p>
           </div>
           <figure><img src={item.imagen} alt="" /></figure>
+          <div class="card-actions justify-end m-4">
+            <button class="btn btn-primary" on:click={next}>Siguiente</button>
+          </div>
         </div>
     {/if}
     {/each}
      <div 
     on:drop={ () => {console.log( "drop" )} } 
     on:dragover={(ev) => { ev.preventDefault() }}>drop on me</div>
-        
-
-    <button class="btn btn-primary" on:click={next}>Siguiente</button>
 
     <div class="carousel rounded-box hidden">
       {#each datos as item, index}
