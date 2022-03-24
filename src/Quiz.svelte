@@ -1,10 +1,8 @@
 <script>
     import { fade, blur, slide, scale, fly } from "svelte/transition";
     import CardImagen from "./componentes/card-img.svelte";
-    import CardText from "./componentes/card-text.svelte";
     import Progress from "./componentes/progress.svelte";
     import Counter from "./componentes/counter.svelte";
-    import CardImgText from "./componentes/card-img-text.svelte";
     import CalcularResultados from "./componentes/calcular-resultados.svelte";
     import CardResultados from "./componentes/card-resultados.svelte";
     import { onMount } from "svelte";
@@ -12,13 +10,12 @@
     let questions = []; //preguntas
     let question_length = 0; //numero de preguntas
     let user_responses = []; //respuestas
-    let select_answer; //pregunta seleccionada
     let question_index = 0; //preguntas hechas
     let score = 0; //numero de respuestas correctas
 
     //Obtener las preguntas del archivo json
     onMount(async () => {
-        const response = await fetch("../data/preguntasYrespuestas.json");
+        const response = await fetch("/preguntasYrespuestas.json");
         const data = await response.json();
         questions = data; //asignar las preguntas a la variable datos
         question_length = questions.length;
@@ -120,21 +117,3 @@
         <div>Error al obtener los datos</div>
     {/if}
 </div>
-
-<style>
-    .w-slide {
-        animation: slidein 1s ease 0s 1 normal none;
-    }
-
-    @keyframes slidein {
-        0% {
-            opacity: 0;
-            transform: translateX(250px);
-        }
-
-        100% {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-</style>
