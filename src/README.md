@@ -1,19 +1,23 @@
 
-
 # Estructura de las preguntas para el quiz
 Crear un tipo de paragraphs "preguntas" con los siguientes campos:
 
---La imagen que se mostrará en el quiz
+- La imagen que se mostrará en el quiz
+  ```
   imagen	
     nombre: field_imagen	
     tipo: Imagen
+  ```
  
---La pregunta que se mostrará
+- La pregunta que se mostrará
+  ```
   pregunta	
     nombre: field_pregunta
     tipo: texto
+  ```
 
---Las opciones que tiene cada pregunta
+- Las opciones que tiene cada pregunta
+```
 opciones	
   field_opciones
     --El texto de la opcion
@@ -25,4 +29,5 @@ opciones
     opciones_correcto
       nombre: pregunta_opciones_correcto
       tipo: booleano
+  ```
   
