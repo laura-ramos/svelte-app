@@ -31,38 +31,31 @@
         <div class="md:w-[40rem] sm:w-full w-full">
             {#each datos as pregunta, questionIndex}
                 {#if preguntas_hechas === questionIndex}
+                <div class="card bg-base-100 shadow-md">
                     <CardImagen imagen={pregunta.imagen}></CardImagen>
-                    <div class="card-title m-2">
-                        <h2>
-                            {pregunta.pregunta}
-                        </h2>
-                    </div>
                     <div class="card-body">
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
+                        <h2 class="card-title">{pregunta.pregunta}</h2>
+                        <div class="grid grid-cols-2 gap-4 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
                             {#each pregunta.opciones as item, index}
                                 <div class="avatar grid">
-                                    <div class="w-44 rounded-xl hover:shadow-2xl" on:click={() => next(index)}>
+                                    <div class="md:w-40 lg:w-44 sm:w-32 rounded-xl hover:shadow-2xl" on:click={() => next(index)}>
                                         <img src={item.img} alt="" class="transform hover:scale-110 duration-200 cursor-pointer" />
                                     </div>
                                     {#if respuestas[questionIndex] == index}
-                                    <div class="w-44 rounded-xl absolute flex justify-center m-2">
+                                    <div class="md:w-40 lg:w-44 sm:w-32 rounded-xl absolute flex justify-center m-2">
                                         <svg class="h-10 w-10 text-white bg-lime-600 rounded-full" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  
                                             <path stroke="none" d="M0 0h24v24H0z"/>
                                             <path d="M5 12l5 5l10 -10" />
                                         </svg>
                                      </div>
-                                        <!-- 
-                                        <div class="w-44 rounded-xl absolute bg-lime-600/50 transition delay-300 duration-700">
-                                            <svg class="h-10 w-10 text-white bg-lime-600 rounded-full"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M5 12l5 5l10 -10" />
-                                            </svg>
-                                         </div>
-                                         -->
                                     {/if}
                                     <h5 class="mt-3 text-center font-semibold">{item.text}</h5>
                                 </div>
                             {/each}
                         </div>
                     </div>
+                </div>
+                    
                 {/if}
             {/each}
             {#if preguntas_hechas == total_preguntas}

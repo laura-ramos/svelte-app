@@ -54,7 +54,7 @@
             </div>
             <!--Tarjeta que se muestra al inicio antes de reponder el test-->
             {#if quiz == false}
-                 <div class="text-gray-900 flex">
+                 <div class="flex">
                  <div>
                    <img
                      src={questions.imagen}
@@ -62,12 +62,12 @@
                      class="w-full object-cover object-center rounded-lg shadow-md"
                    />
                    <div class="relative px-4 -mt-16 text-center">
-                     <div class="bg-white p-6 rounded-lg shadow-lg">
+                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <button
                         class="btn btn-secondary animate-bounce"
                         type="button"
                         on:click={empezar}>¡Empezar!</button>
-                       <h4 class="mt-4 mb-4 text-xl font-semibold leading-tight truncate">
+                       <h4 class="mt-4 mb-4 text-xl font-semibold leading-tight">
                          Test: ¿Cual es tu viaje ideal?
                        </h4>
                        <div class="mt-3">
@@ -86,17 +86,16 @@
                     <div class="mr-2 text-right">
                         <Counter total={question_length} current={question_index+1}/> 
                     </div>
-                    <div class="text-gray-900">
                         <div>
                         <CardImagen imagen={question.imagen} alt=""></CardImagen> 
                         <div class="relative px-4 -mt-16 text-center">
-                            <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <div class="card-body bg-white rounded-lg shadow-md">
                                 <div class="card-title mb-4">
                                 {question.pregunta}
-                            </div>
+                                </div>
                             <!--mostrar las opciones de respuesta de las preguntas-->
                             {#each question.opciones as opcion, i}
-                                <button class="btn btn-sm btn-block btn-outline mt-2" class:selected="{user_responses[index] === i}" on:click={() => selectOpcion(index)}>
+                                <button class="btn btn-sm btn-block btn-outline" class:selected="{user_responses[index] === i}" on:click={() => selectOpcion(index)}>
                                     {opcion}
                                 </button>
                             {/each}
@@ -104,19 +103,15 @@
                           
                         </div>  
                         </div>
-
-                    </div>
-                        
                     {/if}
                 {/each}
             {/if}
             <!--Verificar si todas las preguntas fueron repondidas y mostrar el resultado final-->
             {#if question_length == question_index}
-            <div class="text-gray-900">
                 <div>
                     <CardImagen imagen='https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4b/59/86/caption.jpg?w=500&h=300&s=1'></CardImagen>
                     <div class="relative px-4 -mt-16">
-                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
                             <div class="mt-4 mb-4 text-xl font-semibold leading-tight text-center">Paris</div>
                             Al norte de Francia se encuentra la capital del país, una de
                             las ciudades más importantes en la historia del país galo y
@@ -127,8 +122,6 @@
                             gastronomía etc.
                         </div>
                     </div>
-                </div>
-
             </div>
             {/if}
         <br><br>

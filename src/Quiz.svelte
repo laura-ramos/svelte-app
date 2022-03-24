@@ -88,14 +88,14 @@
                 {#each questions as question, index}
                     {#if question_index === index}
                         <div
-                            class="w-full bg-white rounded shadow-xl p-4 mt-4">
+                            class="w-full bg-white rounded shadow-md p-4 mt-4">
                             <!-- svelte-ignore a11y-img-redundant-alt -->
                             <div class="w-full -mt-9">
                                 <CardImagen imagen={question.imagen} alt="" />
                             </div>
                             <div class="card-body">
                                 <h2 class="card-title">{question.pregunta}</h2>
-                                <div class="text-gray-700">
+                                <div class="">
                                     {#each question.opciones as opcion, i}
                                         <button in:blur={{duration: 700, delay: 200*i}}
                                             class="btn btn-sm btn-block btn-outline mt-2"

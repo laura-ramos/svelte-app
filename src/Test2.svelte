@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import { fade, blur, slide, scale, fly } from "svelte/transition";
     import CardImagen from "./componentes/card-img.svelte";
+    import CardText from "./componentes/card-text.svelte";
     import CardResultados from "./componentes/card-resultados.svelte";
     import Counter from "./componentes/counter.svelte";
     //variables
@@ -53,7 +54,7 @@
             </div>
             <!--Tarjeta que se muestra al inicio antes de reponder el test-->
             {#if quiz == false && finish == false}
-                <div class="card shadow" in:slide>
+                <div class="card shadow-md" in:slide>
                     <div class="">
                         <img src={questions.imagen} class="img-title" alt="" />
                     </div>
@@ -86,28 +87,26 @@
                 </div>
                 {#each questions.preguntas as question, index}
                     {#if question_index === index}
-                        <div class="shadow-lg">
+                        <div class="shadow-md">
                             <div in:blur={{ duration: 500, delay: 500 }}>
+                                <!-- 
+                                    <CardText title={question.pregunta} alt="" />
+                                 -->
                                 <CardImagen imagen={question.imagen} alt="" />
                             </div>
 
-                            <div class="">
-                                <div class="bg-white p-6">
-                                    <div class="card-title mb-4">
-                                        {question.pregunta}
-                                    </div>
-                                    <!--mostrar las opciones de respuesta de las preguntas-->
-                                    <div>
-                                        {#each question.opciones as opcion, i}
-                                            <button in:blur={{duration: 700, delay: 200*i}}
-                                                class="btn btn-sm btn-block btn-outline mt-2 transition"
-                                                class:selected={user_responses[index] === i}
-                                                on:click={() => selectOpcion(i)}>
-                                                {opcion}
-                                            </button>
-                                        {/each}
-                                    </div>
+                            <div class="card-body bg-white">
+                                <div class="card-title mb-4">
+                                    {question.pregunta}
                                 </div>
+                                {#each question.opciones as opcion, i}
+                                    <button in:blur={{duration: 700, delay: 200*i}}
+                                        class="btn btn-sm btn-block btn-outline transition"
+                                        class:selected={user_responses[index] === i}
+                                        on:click={() => selectOpcion(i)}>
+                                        {opcion}
+                                    </button>
+                                {/each}
                             </div>
                         </div>
                     {/if}

@@ -10,10 +10,10 @@
     alt = "";
 </script>
 
-<div class="overflow-hidden bg-zinc-300 rounded-lg shadow-md" style="height: 400px;">
+<div class="overflow-hidden bg-zinc-300 rounded-t-lg md:h-80 lg:h-80 sm:h-64">
     <img
         src={imagen}
-        alt={alt} class="w-full h-full object-cover object-center rounded-lg shadow-md {zoom ? 'transform hover:scale-110 duration-200':''}"
+        alt={alt} class="w-full h-full object-cover object-center {zoom ? 'transform hover:scale-110 duration-200':''}"
     />
     {#if pregunta}
         <div class="card-text">

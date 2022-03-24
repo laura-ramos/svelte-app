@@ -9,59 +9,34 @@
     pregunta = data; //asignar los datos a la variable
   });
 
-  let flipped = false;
-  //funcion para crear la animacion flip
-  function flip(node, { delay = 0, duration = 1500 }) {
-    return {
-      delay,
-      duration,
-      css: (t, u) => `
-				transform: rotateY(${1 - u * 180}deg);
-				opacity: ${1 - u};
-			`,
-    };
-  }
-  let index = 0;
-
-  //funcion para voltear el card cuando se haya seleccionado una opcion
-  function select(i) {
-    flipped = !flipped;
-    index = i;
-  }
-
   var datos = [
     {
-      titulo: "1. El disco más vendido de la historia.",
-      text: "El sexto álbum de Michael Jackson “Thriller” es el más vendido en la historia de la música, con unas ventas aproximadas de entre 51 a 65 millones de copias desde su lanzamiento en 1982.",
-      imagen: "https://placeimg.com/600/300/people",
+      titulo: "Puerto Escondido, Oaxaca",
+      text: "Las playas de Puerto Escondido son perfectas sí lo que prefieres es la acción, deportes y aventura. Encontrarás las mejores opciones y playas para hacer surf, bucear, snorkel e incluso paracaidismo.",
+      imagen: "https://www.elfinanciero.com.mx/resizer/qvQUon2g8ZyHmM07d0GprXSHaec=/1440x810/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/elfinanciero/PUS2XJ2ZEVB4RCG7TYLZCD5L4Q.jpeg",
     },
     {
-      titulo: "Demo card 2",
-      text: "This is a demo for Tinder like swipe cards",
-      imagen: "https://placeimg.com/600/300/animals",
+      titulo: "Xcacel, Quintana Roo",
+      text: "A unos 14 km de Tulum por la carretera Cancún-Tulum encuentras la playa paradisíaca de Xcacel, que esconde uno de los paisajes más bellos del Caribe Mexicano. En medio de una bahía, Xcacel alberga abundantes palmeras, vegetación silvestre y una playa con agua cálida de color turquesa.",
+      imagen: "https://amoplayadelcarmen.info/wp-content/uploads/2019/08/xcacel.jpg",
     },
     {
-      titulo: "Demo card 3",
-      text: "This is a demo for Tinder like swipe cards",
-      imagen: "https://placeimg.com/600/300/nature",
+      titulo: "Mazatlán, Sinaloa",
+      text: "Las mejores playas de México también las puedes encontrar en Mazatlán, Sinaloa. Reconocido como uno de los principales destinos del pacífico mexicano. Existen varias playas de Mazatlán, cada una de estas adaptada para gustos diferentes, descubre cuál es para ti",
+      imagen: "https://mexico10.com/wp-content/uploads/2020/03/mazatlan-sinaloa-min.jpg",
     },
   ];
 
   var preguntas_hechas = 0;
   function next() {
     var moveOutWidth = document.body.clientWidth * 1.5;
-    //preguntas_hechas++;
     document.getElementById("card-item").style.transform =
       "translate(" + moveOutWidth + "px, -100px) rotate(-30deg)";
-    //var style = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
     setTimeout(() => {
       if (datos.length == preguntas_hechas-1) {
-        
       }else{
-        
         preguntas_hechas++;
       }
-      
     }, 500);
   }
   function dragStart(event) {
@@ -77,50 +52,53 @@
 
 <div class="grid justify-center items-center">
   <div class="md:w-[40rem] sm:w-full w-full">
-    <div class="card bg-base-100 shadow-xl">
-      
+    <div class="m-2 text-2xl font-semibold leading-tight">
+      <p>Conoce las 6 playas más baratas y bonitas en México</p>
     </div>
     {#each datos as item, index}
-    {#if preguntas_hechas == index}
-       <div id="card-item" class="card bg-base-100 shadow-xl cursor-grabbing" draggable={true} on:dragstart={event => dragStart(event)} on:dragend={event => drop(event)}>
-          <div class="card-body">
-            <h2 class="card-title">{item.titulo}</h2>
-            <p>{item.text}</p>
-          </div>
-          <figure><img src={item.imagen} alt="" /></figure>
-          <div class="card-actions justify-end m-4">
-            <button class="btn btn-primary" on:click={next}>Siguiente</button>
-          </div>
-        </div>
-    {/if}
-    {/each}
-     <div 
-    on:drop={ () => {console.log( "drop" )} } 
-    on:dragover={(ev) => { ev.preventDefault() }}>drop on me</div>
-
-    <div class="carousel rounded-box hidden">
-      {#each datos as item, index}
-        <div class="carousel-item h-full" id="card-item">
-          <div
-            class="card bg-base-100 shadow-xl cursor-grabbing {preguntas_hechas ==
-            index
-              ? 'block'
-              : 'hidden'}">
+      {#if preguntas_hechas == index}
+        <div id="card-item" class="card bg-base-100 shadow-md cursor-grabbing" draggable={true} on:dragstart={event => dragStart(event)} on:dragend={event => drop(event)}>
             <div class="card-body">
               <h2 class="card-title">{item.titulo}</h2>
               <p>{item.text}</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-primary btn-sm" on:click={next}>Siguiente</button>
+              </div>  
             </div>
-            <img src={item.imagen} alt="" />
+            <figure class="overflow-hidden"><img src={item.imagen} alt="" class="img-animate"/></figure>
           </div>
+      {/if}
+    {/each}
+    {#if preguntas_hechas == datos.length}
+    <div class="card bg-base-100 shadow-md">
+      <div class="card-body">
+        <p>Para mas informacion entrar en:</p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary btn-sm">Playa de mexico</button>
+          <a href="https://traveler.marriott.com/es/viajes-a-la-playa/playas-hermosas-de-mexico/" target="_blank" class="btn btn-primary btn-sm">Playas hermosas de de mexico</a>
         </div>
-      {/each}
+      </div>
     </div>
+    {/if}
   </div>
-  <br /><br />
 </div>
 
 <style>
   .card {
     transition: all 0.3s ease-in-out;
   }
+  .img-animate{
+    animation: myAnim 10s ease 2s 1 normal forwards;
+  }
+  @keyframes myAnim {
+  0% {
+    transform: scale(1) translateY(0);
+    transform-origin: 50% 16%;
+  }
+
+  100% {
+    transform: scale(1.25) translateY(-10px);
+    transform-origin: top;
+  }
+}
 </style>

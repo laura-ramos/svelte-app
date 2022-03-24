@@ -49,7 +49,7 @@
 
     <br>
     <div class="md:w-[40rem] sm:w-full w-full">
-        <div class="bg-white rounded-lg shadow">
+        <div class="bg-white rounded-lg shadow-md">
           <div class="border-t-8 border-pink-600 rounded-lg flex">
             <div class="w-full p-3">
               <h3 class="text-2xl mb-4 text-center">{datos.titulo}</h3>

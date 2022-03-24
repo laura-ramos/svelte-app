@@ -48,7 +48,7 @@
             {/each}
         {:else}
             <div>
-                <div class="spinner-grow text-info" role="status">
+                <div class="spinner-grow" role="status">
                     <span class="sr-only"></span>
                 </div>
                 <p>Cargando.....</p>

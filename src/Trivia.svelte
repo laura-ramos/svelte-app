@@ -62,7 +62,7 @@
                                 alt=""
                             />
                         {/if}
-                        <div class="card-body shadow-xl">
+                        <div class="card-body shadow-md">
                             {#each item.opciones as opcion, i}
                                 <button
                                     class="btn btn-sm btn-block btn-outline mt-1 rounded-full"
