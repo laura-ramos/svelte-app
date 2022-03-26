@@ -1,12 +1,12 @@
 <script>
     import { fade, blur, slide, scale, fly } from "svelte/transition";
-    import { useParams } from "svelte-navigator";
     import { request, gql } from "graphql-request"; //https://github.com/prisma-labs/graphql-request
     let datos;
     let total_preguntas = 0;
     let respuestas = [];
-    const params = useParams();
-    let id = parseInt($params.id);
+    //const params = useParams();
+    //let id = parseInt($params.id);
+    let id = parseInt(123);
     //endpoint donde vamos a obtener los datos
     const endpoint = "http://nvi-cs.docksal/graphql/preguntas";
     //definir el schema de datos que queremos obtener
