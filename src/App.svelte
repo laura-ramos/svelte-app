@@ -11,7 +11,6 @@
 	import FlipCard from "./FlipCard.svelte";
 	import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import Encuesta2 from "./Encuesta2.svelte";
-	import "../node_modules/animate.css/animate.css";
 	
 </script>
 
