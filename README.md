@@ -1,109 +1,36 @@
-*Psst �looking for a more complete solution? Check out [SvelteKit](https://kit.svelte.dev), the official framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing.*
+# Quiz, Trivia, Flipcards y Encuestas con Drupal GraphQL
 
-*Looking for a shareable component template instead? You can [use SvelteKit for that as well](https://kit.svelte.dev/docs#packaging) or the older [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+Este repositorio contiene un proyecto interactivo que ofrece una combinación de elementos: un quiz, trivia, flipcards (tarjetas volteables) y encuestas. Todo esto se alimenta de datos provenientes de una API GraphQL implementada en Drupal. En desarrollo...
 
----
+## Características
 
-# svelte app
-
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
-
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+*   **Diversidad de Contenido:**
+    *   **Quiz:** Tests estructurados con preguntas y respuestas, para evaluar el conocimiento.
+    *   **Trivia:** Datos interesantes y curiosos presentados de forma concisa.
+    *   **Flipcards:** Tarjetas interactivas que muestran información al voltearse (ej: definición en un lado, término en el otro).
+    *   **Encuestas:**  Recopilación de opiniones y feedback a través de preguntas de selección múltiple o abiertas.
+*   **API GraphQL en Drupal:**  La aplicación consume datos desde una API GraphQL de Drupal, permitiendo una fácil gestión y actualización de contenido.
+*   **Interfaz Amigable:** Diseño intuitivo y responsivo para una experiencia de usuario óptima en diferentes dispositivos.
+*   **Personalización:**  Posibilidad de personalizar la apariencia y el comportamiento de los elementos (quiz, trivia, flipcards, encuestas) a través de la configuración.
+*   **Integración con Drupal (Posible):**  Si el frontend se integra con Drupal, se puede utilizar la autenticación de Drupal y la personalización de perfiles.
+*   **Resultados y Análisis (Opcional):**  Implementación de un sistema para guardar resultados de quiz y encuestas, y generar análisis de datos.
 
 
-## Get started
-
-Install the dependencies...
-
-```bash
-cd svelte-app
-npm install
-```
-
-...then start [Rollup](https://rollupjs.org):
-
-```bash
-npm run dev
-```
-
-Navigate to [localhost:8080](http://localhost:8080). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
-
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
-
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
-
-## Building and running in production mode
-
-To create an optimised version of the app:
-
-```bash
-npm run build
-```
-
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
+## Configuración y Ejecución
 
 
-## Single-page app mode
 
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
+##  Uso
 
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
+1.  **Navega por las secciones:**  Utiliza la interfaz para acceder a los elementos del proyecto: Quiz, Trivia, Flipcards, Encuestas.
+2.  **Realiza el Quiz:** Responde a las preguntas y envía tus respuestas para ver tu puntuación.
+3.  **Lee la Trivia:** Disfruta de los datos curiosos y la información interesante.
+4.  **Explora las Flipcards:**  Voltea las tarjetas para descubrir la información oculta.
+5.  **Completa las Encuestas:**  Responde a las preguntas y envía tus respuestas.
 
-```js
-"start": "sirv public --single"
-```
+##  API GraphQL en Drupal
 
-## Using TypeScript
+*   **Endpoint:**  `http://<TU_DRUPAL_URL>/graphql`  (o la URL que hayas configurado en el archivo `.env`).
+*   **Documentación:**  Puedes acceder a la documentación de la API GraphQL (ej: usando GraphiQL o GraphQL Playground) en el endpoint especificado.  Explora el esquema y realiza consultas para comprender la estructura de los datos.
+*   **Tipos de Contenido (Content Types) y Campos:**  Asegúrate de que Drupal tenga los tipos de contenido (content types) y campos necesarios para el quiz, trivia, flipcards y encuestas.  Esto incluye campos para las preguntas, respuestas, títulos, descripciones, etc.  La API GraphQL debe estar configurada para consultar estos campos.
 
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
-
-```bash
-node scripts/setupTypeScript.js
-```
-
-Or remove the script via:
-
-```bash
-rm scripts/setupTypeScript.js
-```
-
-If you want to use `baseUrl` or `path` aliases within your `tsconfig`, you need to set up `@rollup/plugin-alias` to tell Rollup to resolve the aliases. For more info, see [this StackOverflow question](https://stackoverflow.com/questions/63427935/setup-tsconfig-path-in-svelte).
-
-## Deploying to the web
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-vercel deploy --name my-project
-```
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
